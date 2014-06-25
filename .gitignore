@@ -3,7 +3,11 @@
 
 # Ignore external recipes until the dependencies are managed in a tidier way
 cookbooks/apt/
+cookbooks/clamav-chef/
+cookbooks/cron/
+cookbooks/logrotate/
 cookbooks/mysql/
 cookbooks/ruby_build/
 cookbooks/yum-mysql-community/
 cookbooks/yum/
+cookbooks/yum-epel/

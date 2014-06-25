@@ -18,10 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "apt"
     chef.add_recipe "mysql::server"
     chef.add_recipe "ruby_build"
+    chef.add_recipe "clamav-chef"
 
     # Own recipes
     chef.add_recipe "postfix-dovecot"
     chef.add_recipe "posty"
+    chef.add_recipe "spamassassin"
 
     # Minimal required configuration
     chef.json = {

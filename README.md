@@ -9,12 +9,16 @@ Requirements
 The following external cookbooks are used:
 
 * [apt](https://github.com/opscode-cookbooks/apt)
+* [clamav-chef](https://github.com/RoboticCheese/clamav-chef)
+* [cron](https://github.com/opscode-cookbooks/cron)
+* [logrotate](https://github.com/stevendanna/logrotate)
 * [mysql](https://github.com/opscode-cookbooks/mysql)
 * [ruby_build](https://github.com/fnichol/chef-ruby_build)
 
 Additionally the following cookbooks must be present due to dependencies, but aren't executed:
 
 * [yum](https://github.com/opscode-cookbooks/yum)
+* [yum-epel](https://github.com/opscode-cookbooks/yum-epel)
 * [yum-mysql-community](https://github.com/opscode-cookbooks/yum-mysql-community)
 
 
@@ -48,9 +52,13 @@ git clone https://github.com/posty/posty_chef
 cd posty_chef
 
 git clone https://github.com/opscode-cookbooks/apt cookbooks/apt
+git clone https://github.com/RoboticCheese/clamav-chef cookbooks/clamav-chef
+git clone https://github.com/opscode-cookbooks/cron cookbooks/cron
+git clone https://github.com/stevendanna/logrotate cookbooks/logrotate
 git clone https://github.com/opscode-cookbooks/mysql cookbooks/mysql
 git clone https://github.com/fnichol/chef-ruby_build cookbooks/ruby_build
 git clone https://github.com/opscode-cookbooks/yum cookbooks/yum
+git clone https://github.com/opscode-cookbooks/yum-epel cookbooks/yum-epel
 git clone https://github.com/opscode-cookbooks/yum-mysql-community cookbooks/yum-mysql-community
 
 vagrant up
