@@ -7,7 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-
 package 'roundcube' do
     action :install
 end
@@ -20,25 +19,26 @@ template "/etc/roundcube/main.inc.php" do
   group "www-data"
 end
 
-execute "create-roundcube-database" do
-  command "/usr/bin/mysql -uroot -p'test123' -e 'create database roundcube;'"
-  action :run
+
+Chef::Log.info("[Create the vmail database user]")
+execute "mysql-create-roundcube" do
+  command "/usr/bin/mysql -u root -p\"#{node['mysql']['server_root_password']}\" < #{node['roundcube']['conf_dir']}/create-roundcube.sql"
+  action :nothing
 end
-
-#execute "create-account" do
-#  command "/usr/bin/mysql -uroot -p'test123' -e 'GRANT ALL PRIVILEGES ON roundcube . * TO 'roundcube'@'localhost' IDENTIFIED BY 'roundcube';'"
-#  action :run
-#end
-
-execute "flush-privileges" do
-  command "/usr/bin/mysql -uroot -p'test123' -e 'FLUSH PRIVILEGES;' "
-  action :run
+template "#{node['roundcube']['conf_dir']}/create-roundcube.sql" do
+  source "sql/create-roundcube.sql.erb"
+  owner "root"
+  group "root"
+  mode "0600"
+  notifies :run, "execute[mysql-create-roundcube]", :immediately
 end
 
 execute "import-sql-schema" do
-  command "/usr/bin/mysql -uroot -p'test123' roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql"
+  command "/usr/bin/mysql -u root -p\"#{node['mysql']['server_root_password']}\" roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql"
   action :run
 end
+
+
 
 link "/var/www/roundcube" do
     to "/var/lib/roundcube"
