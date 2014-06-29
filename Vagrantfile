@@ -13,6 +13,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All services will be available under this local IP
   config.vm.network :private_network, ip: "192.168.246.10"
 
+  # Improve performance of the VM
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+    vb.customize ["modifyvm", :id, "--cpus", "2"]
+    vb.customize ["modifyvm", :id, "--ioapic", "on"]
+  end
+
   config.vm.provision "chef_solo", run: "always" do |chef|
     # External recipes required
     chef.add_recipe "apt"
