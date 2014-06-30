@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Improve performance of the VM
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "512"]
+    vb.customize ["modifyvm", :id, "--memory", "768"]
     vb.customize ["modifyvm", :id, "--cpus", "2"]
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
   end
@@ -31,6 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "postfix-dovecot"
     chef.add_recipe "posty"
     chef.add_recipe "spamassassin"
+    chef.add_recipe "roundcube"
 
     # Minimal required configuration
     chef.json = {
@@ -42,6 +43,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           "password" => "SETYOURPASSWORDHERE"
         },
         "demo" => {
+          "password" => "SETYOURPASSWORDHERE"
+        }
+      },
+      "roundcube" => {
+        "db" => {
           "password" => "SETYOURPASSWORDHERE"
         }
       }
