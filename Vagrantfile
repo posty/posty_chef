@@ -50,6 +50,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "db" => {
           "password" => "SETYOURPASSWORDHERE"
         }
+      },
+      "clamav" => {
+	"clamd" => {
+	  "enabled" => "true"
+	},
+	"freshclam" => {
+	  "enabled" => "true"
+	}
       }
     }
   end
