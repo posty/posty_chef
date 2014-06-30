@@ -1,7 +1,6 @@
-create database if not exists <%= node['roundcube']['db']['dbname'] %>;
+CREATE database IF NOT EXISTS <%= node['roundcube']['db']['dbname'] %>;
 use <%= node['roundcube']['db']['dbname'] %>;
 
-GRANT ALL ON <%= node['roundcube']['db']['dbname'] %>.* TO '<%=
-node['roundcube']['db']['username']%>'@'localhost' IDENTIFIED BY '<%= node['roundcube']['db']['password'] %>';
-
-
+GRANT ALL ON <%= node['roundcube']['db']['dbname'] %>.* \
+	TO '<%= node['roundcube']['db']['username']%>'@'localhost' \
+	IDENTIFIED BY '<%= node['roundcube']['db']['password'] %>';

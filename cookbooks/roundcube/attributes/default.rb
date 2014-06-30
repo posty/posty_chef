@@ -1,3 +1,3 @@
 default['roundcube']['db']['dbname']     = "roundcube"
 default['roundcube']['db']['username']   = "roundcube"
-default['roundcube']['db']['password']   = "test123"
+default['roundcube']['db']['password']   = ""
