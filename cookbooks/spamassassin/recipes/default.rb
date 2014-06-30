@@ -24,6 +24,12 @@ template "/etc/spamassassin/local.cf" do
   group "root"
 end
 
+Chef::Log.info("[Creating user debian-spamd]")
+user "debian-spamd" do
+  home "/var/lib/spamassassin"
+  shell "/bin/false"
+end
+
 Chef::Log.info("[Updating spamassassin rules]")
 execute "update" do
   command "sa-update && sa-update --nogpg --channel spamassassin.heinlein-support.de"
