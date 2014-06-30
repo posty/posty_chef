@@ -61,29 +61,3 @@ end
 link "/var/www/roundcube" do
     to "/var/lib/roundcube"
 end
-
-
-Chef::Log.info("[Configure apache]")
-for template in [ "000-default.conf",
-                  "default-ssl.conf" ] do
-  template "/etc/apache2/sites-available/#{template}" do
-    source "apache/#{template}"
-    owner "root"
-    group "root"
-    mode "0644"
-  end
-end
-execute "enable-apache2-sites" do
-  command "a2ensite 000-default.conf && a2ensite default-ssl.conf"
-  action :run
-  notifies :restart, "service[apache2]"
-end
-execute "enable-apache2-ssl" do
-  command "a2enmod ssl"
-  action :run
-  notifies :restart, "service[apache2]"
-end
-service 'apache2' do
-  supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
-end
