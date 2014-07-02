@@ -30,7 +30,7 @@ gem_package "passenger"
   package pkg
 end
 execute "disable-apache2-sites" do
-  command "a2dissite 000-default.conf && a2dissite default-ssl.conf"
+  command "ls /etc/apache2/sites-enabled | xargs -r a2dissite"
   not_if "test -e `passenger-install-apache2-module --snippet | head -n1 | cut -d' ' -f3`"
   notifies :restart, "service[apache2]"
 end

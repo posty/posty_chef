@@ -22,11 +22,11 @@ end
 
 Chef::Log.info("[Creating the vmail user]")
 group "vmail" do
-  gid 500
+  gid 5000
 end
 user "vmail" do
-  uid 500
-  gid 500
+  uid 5000
+  gid 5000
   home "/var/vmail"
   shell "/bin/false"
 end
@@ -120,11 +120,8 @@ service 'postfix' do
 end
 service 'dovecot' do
   supports :restart => true, :reload => true, :status => true
-  case node["platform"]
-  when "ubuntu"
-    if node["platform_version"].to_f >= 13.10
-      provider Chef::Provider::Service::Upstart
-    end
+  if node["platform"] == "ubuntu" and node["platform_version"].to_f >= 13.10
+    provider Chef::Provider::Service::Upstart
   end
   action [:enable, :start]
 end

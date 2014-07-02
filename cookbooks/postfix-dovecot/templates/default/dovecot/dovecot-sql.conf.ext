@@ -73,7 +73,8 @@ connect = host=127.0.0.1 dbname=<%= node['postfix-dovecot']['db']['dbname'] %> u
 # List of supported schemes is in
 # http://wiki2.dovecot.org/Authentication/PasswordSchemes
 #
-default_pass_scheme = SHA512-CRYPT
+default_pass_scheme = PLAIN-MD5
+#default_pass_scheme = SHA512-CRYPT
 
 # passdb query to retrieve the password. It can return fields:
 #   password - The user's password. This field must be returned.

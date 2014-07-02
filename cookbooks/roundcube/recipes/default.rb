@@ -51,13 +51,19 @@ template "#{node['roundcube']['conf_dir']}/create-roundcube.sql" do
   mode "0600"
   notifies :run, "execute[mysql-create-roundcube]", :immediately
 end
-
 execute "import-sql-schema" do
   command "/usr/bin/mysql -u root -p\"#{node['mysql']['server_root_password']}\" roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql && touch /etc/xchef-roundcube-mysql-imported"
   action :run
   not_if {File.exists?("/etc/xchef-roundcube-mysql-imported")}
 end
 
+
+Chef::Log.info("[Enable roundcube]")
+execute "php5-enable-mcrypt" do
+  command "php5enmod mcrypt"
+  notifies :restart, "service[apache2]"
+  only_if { node["platform"] == "ubuntu" and node["platform_version"].to_f >= 13.10 }
+end
 link "/var/www/roundcube" do
     to "/var/lib/roundcube"
 end
