@@ -52,12 +52,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         }
       },
       "clamav" => {
-	"clamd" => {
-	  "enabled" => "true"
-	},
-	"freshclam" => {
-	  "enabled" => "true"
-	}
+        "clamd" => {
+          "enabled" => "true"
+        },
+        "freshclam" => {
+          "enabled" => "true",
+          "database_mirrors" => ['clamav.netcologne.de', 'database.clamav.net']
+        }
       }
     }
   end
