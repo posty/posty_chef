@@ -111,6 +111,13 @@ for template in [ "mysql-virtual-domain-aliases.cf",
     notifies :restart, "service[postfix]"
   end
 end
+template "/usr/bin/mail-scanner.sh" do
+  source "postfix/mail-scanner.sh"
+  owner "root"
+  group "root"
+  mode "0755"
+  notifies :restart, "service[postfix]"
+end
 
 
 Chef::Log.info("[Start postfix and dovecot]")
