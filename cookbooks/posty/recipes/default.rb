@@ -97,3 +97,26 @@ execute "rake api_key:generate" do
   cwd node["posty"]["deploy"]["location"]
   environment ({'RACK_ENV' => node["posty"]["deploy"]["rack_env"]})
 end
+
+
+Chef::Log.info("[Install posty_webui]")
+if node["posty"]["webui"]["install"] == true
+  git node["posty"]["webui"]["location"] do
+    repository node["posty"]["webui"]["github"]
+    revision node["posty"]["webui"]["revision"]
+    user node["posty"]["webui"]["user"]
+    group node["posty"]["webui"]["group"]
+    action :sync
+  end
+  link "/var/www/posty_webui" do
+    to "/srv/posty_webui/dist"
+  end
+  template "#{node["posty"]["webui"]["location"]}/dist/settings.json" do
+    source "settings.json.erb"
+    variables lazy {{ :apikey => `cd #{node["posty"]["deploy"]["location"]} &&
+                      echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
+    owner node["posty"]["webui"]["user"]
+    group node["posty"]["webui"]["group"]
+    mode "0644"
+  end
+end
