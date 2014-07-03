@@ -1,3 +1,11 @@
+default["mysql"]["server_root_password"]     = "SETYOURPASSWORDHERE"
+default["postfix-dovecot"]["db"]["password"] = "SETYOURPASSWORDHERE"
+default["roundcube"]["db"]["password"]       = "SETYOURPASSWORDHERE"
+default["clamav"]["clamd"]["enabled"]        = "true"
+default["freshclam"]["enabled"]              = "true"
+default["freshclam"]["database_mirrors"]     = ['clamav.netcologne.de', 'database.clamav.net']
+
+
 default["posty"]["ruby"]["version"] = "2.0.0-p481"
 
 default["posty"]["db"]["host"]     = "localhost"
@@ -23,4 +31,3 @@ default["posty"]["webui"]["group"]     = "www-data"
 default["posty"]["webui"]["location"]  = "/srv/posty_webui"
 default["posty"]["webui"]["github"]    = "https://github.com/posty/posty_webui"
 default["posty"]["webui"]["revision"]  = "master"
-

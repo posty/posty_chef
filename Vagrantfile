@@ -21,45 +21,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "chef_solo", run: "always" do |chef|
-    # External recipes required
-    chef.add_recipe "apt"
-    chef.add_recipe "mysql::server"
-    chef.add_recipe "ruby_build"
-    chef.add_recipe "clamav-chef"
-
-    # Own recipes
-    chef.add_recipe "postfix-dovecot"
     chef.add_recipe "posty"
-    chef.add_recipe "spamassassin"
-    chef.add_recipe "roundcube"
-
-    # Minimal required configuration
-    chef.json = {
-      "mysql" => {
-        "server_root_password" => "SETYOURPASSWORDHERE"
-      },
-      "postfix-dovecot" => {
-        "db" => {
-          "password" => "SETYOURPASSWORDHERE"
-        },
-        "demo" => {
-          "password" => "SETYOURPASSWORDHERE"
-        }
-      },
-      "roundcube" => {
-        "db" => {
-          "password" => "SETYOURPASSWORDHERE"
-        }
-      },
-      "clamav" => {
-        "clamd" => {
-          "enabled" => "true"
-        },
-        "freshclam" => {
-          "enabled" => "true",
-          "database_mirrors" => ['clamav.netcologne.de', 'database.clamav.net']
-        }
-      }
-    }
   end
 end
