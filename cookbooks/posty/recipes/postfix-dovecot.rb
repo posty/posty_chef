@@ -1,15 +1,15 @@
 # Check if all required attributes are set
-if node['posty']['db']['password'].empty?
+if node["posty"]["db"]["password"].empty?
   Chef::Application.fatal!("You must set a password for the vmail database user.")
 end
 
 
 Chef::Log.info("[Create the vmail database user]")
 execute "mysql-create-vmail" do
-  command "/usr/bin/mysql -u root -p\"#{node['mysql']['server_root_password']}\" < #{node['posty']['conf_dir']}/create-vmail.sql"
+  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" < #{node["posty"]["conf_dir"]}/create-vmail.sql"
   action :nothing
 end
-template "#{node['posty']['conf_dir']}/create-vmail.sql" do
+template "#{node["posty"]["conf_dir"]}/create-vmail.sql" do
   source "sql/create-vmail.sql.erb"
   owner "root"
   group "root"

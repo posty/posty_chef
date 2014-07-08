@@ -66,7 +66,7 @@ driver = mysql
 #   connect = host=sql.example.com dbname=virtual user=virtual password=blarg
 #   connect = /etc/dovecot/authdb.sqlite
 #
-connect = host=127.0.0.1 dbname=<%= node['posty']['db']['dbname'] %> user=<%= node['posty']['db']['username']%> password=<%= node['posty']['db']['password'] %>
+connect = host=127.0.0.1 dbname=<%= node["posty"]["db"]["dbname"] %> user=<%= node["posty"]["db"]["username"]%> password=<%= node["posty"]["db"]["password"] %>
 
 # Default password scheme.
 #

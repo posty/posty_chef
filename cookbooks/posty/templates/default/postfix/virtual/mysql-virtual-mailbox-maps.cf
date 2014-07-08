@@ -1,5 +1,5 @@
-user = <%= node['posty']['db']['username']%>
-password = <%= node['posty']['db']['password'] %>
+user = <%= node["posty"]["db"]["username"]%>
+password = <%= node["posty"]["db"]["password"] %>
 hosts = 127.0.0.1
-dbname = <%= node['posty']['db']['dbname'] %>
+dbname = <%= node["posty"]["db"]["dbname"] %>
 query = SELECT 1 FROM users_view WHERE email='%s'

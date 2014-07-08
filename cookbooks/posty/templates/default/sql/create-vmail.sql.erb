@@ -1,4 +1,6 @@
-create database if not exists <%= node['posty']['db']['dbname'] %>;
-use <%= node['posty']['db']['dbname'] %>;
+CREATE database IF NOT EXISTS <%= node["posty"]["db"]["dbname"] %>;
+use <%= node["posty"]["db"]["dbname"] %>;
 
-GRANT ALL ON <%= node['posty']['db']['dbname'] %>.* TO '<%= node['posty']['db']['username']%>'@'localhost' IDENTIFIED BY '<%= node['posty']['db']['password'] %>';
+GRANT ALL ON <%= node["posty"]["db"]["dbname"] %>.* \
+	TO '<%= node["posty"]["db"]["username"]%>'@'localhost' \
+	IDENTIFIED BY '<%= node["posty"]["db"]["password"] %>';

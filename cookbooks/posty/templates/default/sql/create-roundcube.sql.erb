@@ -1,6 +1,6 @@
-CREATE database IF NOT EXISTS <%= node['posty']['roundcube']['dbname'] %>;
-use <%= node['posty']['roundcube']['dbname'] %>;
+CREATE database IF NOT EXISTS <%= node["posty"]["roundcube"]["dbname"] %>;
+use <%= node["posty"]["roundcube"]["dbname"] %>;
 
-GRANT ALL ON <%= node['posty']['roundcube']['dbname'] %>.* \
-	TO '<%= node['posty']['roundcube']['dbuser']%>'@'localhost' \
-	IDENTIFIED BY '<%= node['posty']['roundcube']['dbpass'] %>';
+GRANT ALL ON <%= node["posty"]["roundcube"]["dbname"] %>.* \
+	TO '<%= node["posty"]["roundcube"]["dbuser"]%>'@'localhost' \
+	IDENTIFIED BY '<%= node["posty"]["roundcube"]["dbpass"] %>';
