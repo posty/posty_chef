@@ -1,5 +1,0 @@
-user = <%= node['postfix-dovecot']['db']['username']%>
-password = <%= node['postfix-dovecot']['db']['password'] %>
-hosts = 127.0.0.1
-dbname = <%= node['postfix-dovecot']['db']['dbname'] %>
-query = SELECT destination FROM virtual_transports WHERE name='%s'

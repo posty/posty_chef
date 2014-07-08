@@ -2,7 +2,7 @@ production:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: <%= node["posty"]["db"]["name"] %>
+ database: <%= node["posty"]["db"]["dbname"] %>
  pool: 5
  username: <%= node["posty"]["db"]["username"] %>
  password: <%= node["posty"]["db"]["password"] %>
@@ -12,7 +12,7 @@ development:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: <%= node["posty"]["db"]["name"] %>
+ database: <%= node["posty"]["db"]["dbname"] %>
  pool: 5
  username: <%= node["posty"]["db"]["username"] %>
  password: <%= node["posty"]["db"]["password"] %>

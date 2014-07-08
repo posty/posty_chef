@@ -30,8 +30,8 @@ smtpd_sasl_path = private/auth
 smtpd_sasl_auth_enable = yes
 
 # Network
-myhostname = <%= node['postfix-dovecot']['mail']['hostname'] %>
-myorigin = <%= node['postfix-dovecot']['mail']['hostname'] %>
+myhostname = <%= node["posty"]["mail"]["hostname"] %>
+myorigin = <%= node["posty"]["mail"]["hostname"] %>
 mydestination = localhost
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 mailbox_size_limit = 51200000
