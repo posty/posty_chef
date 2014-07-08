@@ -19,7 +19,6 @@ depends "logrotate"
 depends "mysql"
 depends "ruby_build"
 
-depends "roundcube"
 depends "spamassassin"
 
 depends "yum"

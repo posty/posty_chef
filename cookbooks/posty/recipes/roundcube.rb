@@ -25,14 +25,14 @@ execute "reconfigure-roundcube" do
   action :nothing
 end
 template "/etc/dbconfig-common/roundcube.conf" do
-  source "roundcube.conf.erb"
+  source "roundcube/roundcube.conf.erb"
   mode "0600"
   owner "root"
   group "root"
   notifies :run, "execute[reconfigure-roundcube]", :immediately
 end
 template "/etc/roundcube/main.inc.php" do
-  source "main.inc.php"
+  source "roundcube/main.inc.php"
   mode "0640"
   owner "root"
   group "www-data"
