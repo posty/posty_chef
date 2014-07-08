@@ -3,7 +3,7 @@ package 'spamassassin spamc'
 
 Chef::Log.info("[Configuring spamassassin cronjob]")
 template "/etc/cron.daily/spamassassin" do
-  source "cron.daily.erb"
+  source "spamassassin/cron.daily.erb"
   mode "0755"
   owner "root"
   group "root"
@@ -12,13 +12,13 @@ end
 
 Chef::Log.info("[Configuring spamassassin]")
 template "/etc/default/spamassassin" do
-  source "default.erb"
+  source "spamassassin/default.erb"
   mode "0644"
   owner "root"
   group "root"
 end
 template "/etc/spamassassin/local.cf" do
-  source "local.cf.erb"
+  source "spamassassin/local.cf.erb"
   mode "0644"
   owner "root"
   group "root"

@@ -19,8 +19,6 @@ depends "logrotate"
 depends "mysql"
 depends "ruby_build"
 
-depends "spamassassin"
-
 depends "yum"
 depends "yum-epel"
 depends "yum-mysql-community"
