@@ -24,12 +24,12 @@ dbc_dbtype='mysql'
 
 # dbc_dbuser: database user
 #	the name of the user who we will use to connect to the database.
-dbc_dbuser='<%= node['roundcube']['db']['username'] %>'
+dbc_dbuser='<%= node['posty']['roundcube']['dbuser'] %>'
 
 # dbc_dbpass: database user password
 #	the password to use with the above username when connecting
 #	to a database, if one is required
-dbc_dbpass='<%= node['roundcube']['db']['password'] %>'
+dbc_dbpass='<%= node['posty']['roundcube']['dbpass'] %>'
 
 # dbc_dbserver: database host.  
 #	leave unset to use localhost (or a more efficient local method
@@ -43,7 +43,7 @@ dbc_dbport=''
 
 # dbc_dbname: name of database
 #	this is the name of your application's database.
-dbc_dbname='<%= node['roundcube']['db']['dbname'] %>'
+dbc_dbname='<%= node['posty']['roundcube']['dbname'] %>'
 
 # dbc_dbadmin: name of the administrative user
 #	this is the administrative user that is used to create all of the above

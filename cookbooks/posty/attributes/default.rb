@@ -1,6 +1,6 @@
 default["mysql"]["server_root_password"]     = "SETYOURPASSWORDHERE"
 default["posty"]["db"]["password"]           = "SETYOURPASSWORDHERE"
-default["roundcube"]["db"]["password"]       = "SETYOURPASSWORDHERE"
+default["posty"]["roundcube"]["dbpass"]      = "SETYOURPASSWORDHERE"
 default["clamav"]["clamd"]["enabled"]        = "true"
 default["freshclam"]["enabled"]              = "true"
 default["freshclam"]["database_mirrors"]     = ['clamav.netcologne.de', 'database.clamav.net']
@@ -16,6 +16,9 @@ default["posty"]["db"]["host"]     = "localhost"
 default["posty"]["db"]["dbname"]   = "vmail"
 default["posty"]["db"]["username"] = "vmail"
 default["posty"]["db"]["socket"]   = "/var/run/mysqld/mysqld.sock"
+
+default['posty']['roundcube']['dbname'] = "roundcube"
+default['posty']['roundcube']['dbuser'] = "roundcube"
 
 default["posty"]["deploy"]["user"]     = "root"
 default["posty"]["deploy"]["group"]    = "www-data"
