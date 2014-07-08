@@ -1,17 +1,20 @@
 default["mysql"]["server_root_password"]     = "SETYOURPASSWORDHERE"
-default["postfix-dovecot"]["db"]["password"] = "SETYOURPASSWORDHERE"
+default["posty"]["db"]["password"]           = "SETYOURPASSWORDHERE"
 default["roundcube"]["db"]["password"]       = "SETYOURPASSWORDHERE"
 default["clamav"]["clamd"]["enabled"]        = "true"
 default["freshclam"]["enabled"]              = "true"
 default["freshclam"]["database_mirrors"]     = ['clamav.netcologne.de', 'database.clamav.net']
 
 
+default['posty']['conf_dir']        = "/tmp"
 default["posty"]["ruby"]["version"] = "2.0.0-p481"
 
+default['posty']['mail']['hostname'] = node['hostname']
+default['posty']['mail']['domain']   = "example.org"
+
 default["posty"]["db"]["host"]     = "localhost"
-default["posty"]["db"]["name"]     = node['postfix-dovecot']['db']['dbname']
-default["posty"]["db"]["username"] = node['postfix-dovecot']['db']['username']
-default["posty"]["db"]["password"] = node['postfix-dovecot']['db']['password']
+default["posty"]["db"]["dbname"]   = "vmail"
+default["posty"]["db"]["username"] = "vmail"
 default["posty"]["db"]["socket"]   = "/var/run/mysqld/mysqld.sock"
 
 default["posty"]["deploy"]["user"]     = "root"

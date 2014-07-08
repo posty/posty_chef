@@ -1,4 +1,4 @@
-create database if not exists <%= node['postfix-dovecot']['db']['dbname'] %>;
-use <%= node['postfix-dovecot']['db']['dbname'] %>;
+create database if not exists <%= node['posty']['db']['dbname'] %>;
+use <%= node['posty']['db']['dbname'] %>;
 
-GRANT ALL ON <%= node['postfix-dovecot']['db']['dbname'] %>.* TO '<%= node['postfix-dovecot']['db']['username']%>'@'localhost' IDENTIFIED BY '<%= node['postfix-dovecot']['db']['password'] %>';
+GRANT ALL ON <%= node['posty']['db']['dbname'] %>.* TO '<%= node['posty']['db']['username']%>'@'localhost' IDENTIFIED BY '<%= node['posty']['db']['password'] %>';
