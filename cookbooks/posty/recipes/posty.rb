@@ -79,7 +79,7 @@ git node["posty"]["deploy"]["location"] do
   action :sync
 end
 template "#{node["posty"]["deploy"]["location"]}/config/database.yml" do
-  source "database.yml.erb"
+  source "posty/database.yml.erb"
   owner node["posty"]["deploy"]["user"]
   group node["posty"]["deploy"]["group"]
   mode "0644"
@@ -112,7 +112,7 @@ if node["posty"]["webui"]["install"] == true
     to "/srv/posty_webui/dist"
   end
   template "#{node["posty"]["webui"]["location"]}/dist/settings.json" do
-    source "settings.json.erb"
+    source "posty/settings.json.erb"
     variables lazy {{ :apikey => `cd #{node["posty"]["deploy"]["location"]} &&
                       echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
     owner node["posty"]["webui"]["user"]

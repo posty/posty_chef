@@ -14,5 +14,5 @@ include_recipe "clamav-chef"
 
 include_recipe "posty::postfix-dovecot"
 include_recipe "posty::posty"
-include_recipe "posty::spamassassin"
 include_recipe "posty::roundcube"
+include_recipe "posty::spamassassin"
