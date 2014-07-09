@@ -1,0 +1,16 @@
+{
+  "mysql": {
+    "server_root_password": "SETYOURPASSWORDHERE"
+  },
+  "posty": {
+    "db": {
+      "password": "SETYOURPASSWORDHERE"
+	},
+    "roundcube": {
+	  "dbpass": "SETYOURPASSWORDHERE"
+	}
+  },
+  "run_list": [
+    "recipe[posty]"
+  ]
+}
