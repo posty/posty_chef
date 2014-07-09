@@ -48,7 +48,7 @@ end
 
 
 Chef::Log.info("[Install dovecot]")
-%w{ dovecot-core dovecot-imapd dovecot-mysql dovecot-lmtpd }.each do |pkg|
+%w{ dovecot-core dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-lmtpd }.each do |pkg|
   package pkg
 end
 
