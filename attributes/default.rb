@@ -41,11 +41,12 @@ default["posty"]["deploy"]["host"]     = "192.168.254.10"
 default["posty"]["deploy"]["webpath"]  = "posty_api"
 default["posty"]["webui"]["apiurl"]    = "http://#{default["posty"]["deploy"]["host"]}/#{default["posty"]["deploy"]["webpath"]}/api/v1"
 
-default["posty"]["webui"]["install"]   = true
 default["posty"]["webui"]["user"]      = "root"
 default["posty"]["webui"]["group"]     = "www-data"
 default["posty"]["webui"]["location"]  = "/srv/posty_webui"
 default["posty"]["webui"]["github"]    = "https://github.com/posty/posty_webui"
 default["posty"]["webui"]["revision"]  = "master"
 
+default["posty"]["webui"]["install"]   = true
+default["posty"]["webindex"]["install"]= true
 default["posty"]["client"]["install"]  = true

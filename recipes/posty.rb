@@ -123,6 +123,8 @@ if node["posty"]["webui"]["install"] == true
   end
   link "/var/www/posty_webui" do
     to "/srv/posty_webui/dist"
+    owner "www-data"
+    group "www-data"
   end
   template "#{node["posty"]["webui"]["location"]}/dist/settings.json" do
     source "posty/settings.json.erb"
@@ -140,5 +142,30 @@ if node["posty"]["client"]["install"] == true
   execute "install-posty_client" do
     command "/usr/local/bin/gem install posty_client"
     not_if "/usr/local/bin/gem list | grep -q posty_client"
+  end
+end
+
+
+if node["posty"]["webindex"]["install"] == true
+  Chef::Log.info("[Add webindex]")
+  template "/var/www/index.html" do
+    source "posty/index.html"
+    owner "www-data"
+    group "www-data"
+    mode "0644"
+  end
+  directory "/var/www/img" do
+    owner "www-data"
+    group "www-data"
+    mode "0755"
+  end
+  for file in [ "roundcube.png",
+                "posty.png" ] do
+    cookbook_file "/var/www/img/#{file}" do
+      source "img/#{file}"
+      owner "www-data"
+      group "www-data"
+      mode "0644"
+    end
   end
 end
