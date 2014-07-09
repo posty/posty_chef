@@ -1,3 +1,12 @@
+#
+# Cookbook Name:: posty
+#
+# Copyright 2014, posty-soft.org
+#
+# Licensed under the LGPL v3
+# https://www.gnu.org/licenses/lgpl.html
+#
+
 default["mysql"]["server_root_password"]     = "SETYOURPASSWORDHERE"
 default["posty"]["db"]["password"]           = "SETYOURPASSWORDHERE"
 default["posty"]["roundcube"]["dbpass"]      = "SETYOURPASSWORDHERE"
@@ -28,7 +37,7 @@ default["posty"]["deploy"]["location"] = "/srv/posty_api"
 default["posty"]["deploy"]["github"]   = "https://github.com/posty/posty_api"
 default["posty"]["deploy"]["revision"] = "master"
 
-default["posty"]["deploy"]["host"]     = "192.168.246.10"
+default["posty"]["deploy"]["host"]     = "192.168.254.10"
 default["posty"]["deploy"]["webpath"]  = "posty_api"
 default["posty"]["webui"]["apiurl"]    = "http://#{default["posty"]["deploy"]["host"]}/#{default["posty"]["deploy"]["webpath"]}/api/v1"
 
@@ -38,3 +47,5 @@ default["posty"]["webui"]["group"]     = "www-data"
 default["posty"]["webui"]["location"]  = "/srv/posty_webui"
 default["posty"]["webui"]["github"]    = "https://github.com/posty/posty_webui"
 default["posty"]["webui"]["revision"]  = "master"
+
+default["posty"]["client"]["install"]  = true

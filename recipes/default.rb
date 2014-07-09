@@ -11,7 +11,7 @@
 include_recipe "apt"
 include_recipe "mysql::server"
 
-include_recipe "clamav-chef"
+include_recipe "clamav"
 
 include_recipe "posty::postfix-dovecot"
 include_recipe "posty::posty"

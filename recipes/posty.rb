@@ -133,3 +133,12 @@ if node["posty"]["webui"]["install"] == true
     mode "0644"
   end
 end
+
+
+Chef::Log.info("[Install posty_client]")
+if node["posty"]["client"]["install"] == true
+  execute "install-posty_client" do
+    command "/usr/local/bin/gem install posty_client"
+    not_if "/usr/local/bin/gem list | grep -q posty_client"
+  end
+end
