@@ -4,7 +4,7 @@ maintainer_email 'contact@posty-soft.org'
 license          'LGPL v3'
 description      'Installs/Configures a full mailserver stack administrated by posty'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.9.0'
+version          '0.9.5'
 
 recipe "posty::default", "The default recipe installs a full mail server stack by including the individual recipes"
 recipe "posty::postfix-dovecot", "Installs postfix and dovecot from the package sources and configures them"
