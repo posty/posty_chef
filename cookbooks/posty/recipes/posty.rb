@@ -5,11 +5,14 @@ ruby_version = node["posty"]["ruby"]["version"]
 
 ruby_build_ruby(ruby_version) { prefix_path "/usr/local" }
 
-bash "update-rubygems" do
-  code   "gem update --system"
-  not_if "gem list | grep -q rubygems-update"
+execute "update-rubygems" do
+  command "/usr/local/bin/gem update --system"
+  not_if "/usr/local/bin/gem list | grep -q rubygems-update"
 end
-gem_package "bundler"
+execute "install-bundler" do
+  command "/usr/local/bin/gem install bundler"
+  not_if "/usr/local/bin/gem list | grep -q bundler"
+end
 
 
 Chef::Log.info("[Install apache]")
