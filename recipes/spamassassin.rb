@@ -1,3 +1,13 @@
+#
+# Cookbook Name:: posty
+# Recipe:: spamassassin
+#
+# Copyright 2014, posty-soft.org
+#
+# Licensed under the LGPL v3
+# https://www.gnu.org/licenses/lgpl.html
+#
+
 Chef::Log.info("[Installing spamassassin and spamc]")
 package 'spamassassin spamc'
 

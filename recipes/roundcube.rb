@@ -1,10 +1,11 @@
 #
-# Cookbook Name:: Roundcube
-# Recipe:: default
+# Cookbook Name:: posty
+# Recipe:: roundcube
 #
-# Copyright 2014, postysoft
+# Copyright 2014, posty-soft.org
 #
-# All rights reserved - Do Not Redistribute
+# Licensed under the LGPL v3
+# https://www.gnu.org/licenses/lgpl.html
 #
 
 # Check if all required attributes are set

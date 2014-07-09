@@ -1,3 +1,13 @@
+#
+# Cookbook Name:: posty
+# Recipe:: postfix-dovecot
+#
+# Copyright 2014, posty-soft.org
+#
+# Licensed under the LGPL v3
+# https://www.gnu.org/licenses/lgpl.html
+#
+
 # Check if all required attributes are set
 if node["posty"]["db"]["password"].empty?
   Chef::Application.fatal!("You must set a password for the vmail database user.")

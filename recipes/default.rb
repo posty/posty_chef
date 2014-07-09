@@ -2,9 +2,10 @@
 # Cookbook Name:: posty
 # Recipe:: default
 #
-# Copyright 2014, posty-soft
+# Copyright 2014, posty-soft.org
 #
-# All rights reserved - Do Not Redistribute
+# Licensed under the LGPL v3
+# https://www.gnu.org/licenses/lgpl.html
 #
 
 include_recipe "apt"
