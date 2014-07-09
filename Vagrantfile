@@ -2,6 +2,8 @@
 # vi: set ft=ruby :
 
 VAGRANTFILE_API_VERSION = "2"
+Vagrant.require_version ">= 1.5.0"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Use a minimal ubuntu 14.04 image as base system
   config.vm.box = "chef/ubuntu-14.04"
@@ -10,8 +12,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Use vagrant-omnibus to install chef on the VM
   config.omnibus.chef_version = :latest
 
+  # Use vagrant-berkshelf for cookbook management
+  config.berkshelf.enabled = true
+
   # All services will be available under this local IP
-  config.vm.network :private_network, ip: "192.168.246.10"
+  config.vm.network :private_network, ip: "192.168.254.10"
 
   # Improve performance of the VM
   config.vm.provider :virtualbox do |vb|
