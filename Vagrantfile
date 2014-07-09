@@ -26,6 +26,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "chef_solo", run: "always" do |chef|
+    json = "config/posty.json"
+    if File.exists?(json)
+      config = JSON.parse(File.read(json))
+      config.delete("run_list")
+      chef.json.merge!(config)
+    end
+
     chef.add_recipe "posty"
   end
 end

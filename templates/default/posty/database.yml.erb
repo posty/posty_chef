@@ -4,8 +4,8 @@ production:
  reconnect: false
  database: <%= node["posty"]["db"]["dbname"] %>
  pool: 5
- username: <%= node["posty"]["db"]["username"] %>
- password: <%= node["posty"]["db"]["password"] %>
+ username: <%= node["posty"]["db"]["dbuser"] %>
+ password: <%= node["posty"]["db"]["dbpass"] %>
  socket: <%= node["posty"]["db"]["socket"] %>
 
 development:
@@ -14,6 +14,6 @@ development:
  reconnect: false
  database: <%= node["posty"]["db"]["dbname"] %>
  pool: 5
- username: <%= node["posty"]["db"]["username"] %>
- password: <%= node["posty"]["db"]["password"] %>
+ username: <%= node["posty"]["db"]["dbuser"] %>
+ password: <%= node["posty"]["db"]["dbpass"] %>
  socket: <%= node["posty"]["db"]["socket"] %>

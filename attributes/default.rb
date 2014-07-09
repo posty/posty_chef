@@ -7,16 +7,13 @@
 # https://www.gnu.org/licenses/lgpl.html
 #
 
-default["mysql"]["server_root_password"]     = "SETYOURPASSWORDHERE"
-default["posty"]["db"]["password"]           = "SETYOURPASSWORDHERE"
-default["posty"]["roundcube"]["dbpass"]      = "SETYOURPASSWORDHERE"
-
+default["mysql"]["server_root_password"]     = ""
 default["clamav"]["clamd"]["enabled"]        = "true"
 default["freshclam"]["enabled"]              = "true"
 default["freshclam"]["database_mirrors"]     = ["clamav.netcologne.de", "database.clamav.net"]
 
 
-default["posty"]["conf_dir"]        = "/tmp"
+default["posty"]["conf_dir"]        = "/var/tmp"
 default["posty"]["ruby"]["version"] = "2.0.0-p481"
 
 default["posty"]["mail"]["hostname"] = node["hostname"]
@@ -24,11 +21,13 @@ default["posty"]["mail"]["domain"]   = "example.org"
 
 default["posty"]["db"]["host"]     = "localhost"
 default["posty"]["db"]["dbname"]   = "vmail"
-default["posty"]["db"]["username"] = "vmail"
+default["posty"]["db"]["dbuser"] = "vmail"
+default["posty"]["db"]["dbpass"] = ""
 default["posty"]["db"]["socket"]   = "/var/run/mysqld/mysqld.sock"
 
 default["posty"]["roundcube"]["dbname"] = "roundcube"
 default["posty"]["roundcube"]["dbuser"] = "roundcube"
+default["posty"]["roundcube"]["dbpass"] = ""
 
 default["posty"]["deploy"]["user"]     = "root"
 default["posty"]["deploy"]["group"]    = "www-data"

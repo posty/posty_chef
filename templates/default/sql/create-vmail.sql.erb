@@ -2,5 +2,5 @@ CREATE database IF NOT EXISTS <%= node["posty"]["db"]["dbname"] %>;
 use <%= node["posty"]["db"]["dbname"] %>;
 
 GRANT ALL ON <%= node["posty"]["db"]["dbname"] %>.* \
-	TO '<%= node["posty"]["db"]["username"]%>'@'localhost' \
-	IDENTIFIED BY '<%= node["posty"]["db"]["password"] %>';
+	TO '<%= node["posty"]["db"]["dbuser"]%>'@'localhost' \
+	IDENTIFIED BY '<%= node["posty"]["db"]["dbpass"] %>';
