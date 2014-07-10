@@ -33,7 +33,7 @@ template "/etc/dbconfig-common/roundcube.conf" do
   notifies :run, "execute[reconfigure-roundcube]", :immediately
 end
 template "/etc/roundcube/main.inc.php" do
-  source "roundcube/main.inc.php"
+  source "roundcube/main.inc.php.erb"
   mode "0640"
   owner "root"
   group "www-data"
