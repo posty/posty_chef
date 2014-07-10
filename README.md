@@ -4,8 +4,10 @@ Chef cookbook to install and configure a mail server with
 [Postfix](http://www.postfix.org/),
 [Dovecot](http://www.dovecot.org/),
 [Roundcube](http://roundcube.net/),
+[ClamAV](http://clamav.net/),
 [SpamAssassin](http://spamassassin.apache.org/) and
 [Posty](http://www.posty-soft.org/).
+
 
 Requirements
 ------------
@@ -26,7 +28,6 @@ Additionally the following cookbooks must be present due to dependencies, but ar
 * [yum-epel](https://github.com/opscode-cookbooks/yum-epel)
 * [yum-mysql-community](https://github.com/opscode-cookbooks/yum-mysql-community)
 
-
 ### Platform
 The following platforms are currently supported and tested:
 
@@ -40,11 +41,15 @@ Before starting the installation of the posty system it is recommended that you
 configure your own passwords (and other settings if you wish) in
 config/posty.json
 
+
 Usage
 -----
 This recipe can be used in multiple ways. The Vagrant method is recommended for
 inexperienced Chef users.
 
+Warning: This recipe installs a complete mail server with many individual
+programms, thus changes a lot of system files. Using it on an unconfigured
+system is recommended.
 
 #### Chef Server
 Just include `posty` in your node's `run_list`:
