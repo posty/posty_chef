@@ -9,7 +9,7 @@
 #
 
 # Check if all required attributes are set
-if node["posty"]["db"]["password"].empty?
+if node["posty"]["db"]["dbpass"].to_s.empty?
   Chef::Application.fatal!("You must set a password for the vmail database user.")
 end
 

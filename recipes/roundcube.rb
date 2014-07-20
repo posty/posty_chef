@@ -9,7 +9,7 @@
 #
 
 # Check if all required attributes are set
-if node["posty"]["roundcube"]["dbpass"].empty?
+if node["posty"]["roundcube"]["dbpass"].to_s.empty?
   Chef::Application.fatal!("You must set a password for the roundcube database user.")
 end
 

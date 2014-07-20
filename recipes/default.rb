@@ -9,7 +9,7 @@
 #
 
 # Check if all required attributes are set
-if !node["mysql"]["server_root_password"] or node["mysql"]["server_root_password"].empty?
+if node["mysql"]["server_root_password"].to_s.empty?
   Chef::Application.fatal!("Please set a root password for the mysql database.")
 end
 
