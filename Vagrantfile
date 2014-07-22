@@ -9,6 +9,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "chef/ubuntu-14.04"
   config.vm.hostname = "posty-chef"
 
+  unless Vagrant::VERSION =~ /^1.[0-5]/
+    config.vm.post_up_message = "Congratulation! The posty mail server is now running." +
+      "You can login with `vagrant ssh`, access posty_api and roundcube via http://192.168.254.10 and use the mail services on the same ip"
+  end
+
   # Use vagrant-omnibus to install chef on the VM
   config.omnibus.chef_version = :latest
 
@@ -20,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Improve performance of the VM
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "768"]
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--cpus", "2"]
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
   end

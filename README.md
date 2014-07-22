@@ -28,6 +28,8 @@ Additionally the following cookbooks must be present due to dependencies, but ar
 * [yum-epel](https://github.com/opscode-cookbooks/yum-epel)
 * [yum-mysql-community](https://github.com/opscode-cookbooks/yum-mysql-community)
 
+All dependencies are automatically resolved when using Berkshelf
+
 ### Platform
 The following platforms are currently supported and tested:
 
@@ -39,7 +41,7 @@ Configuration
 -------------
 Before starting the installation of the posty system it is recommended that you
 configure your own passwords (and other settings if you wish) in
-config/posty.json
+`config/posty.json`
 
 
 Usage
@@ -47,9 +49,11 @@ Usage
 This recipe can be used in multiple ways. The Vagrant method is recommended for
 inexperienced Chef users.
 
-Warning: This recipe installs a complete mail server with many individual
+**Warning**: This recipe installs a complete mail server with many individual
 programms, thus changes a lot of system files. Using it on an unconfigured
 system is recommended.
+Also this recipe's original purpose is to provide a easy way to check out the
+posty-api and further steps should be taken for a production deployment.
 
 #### Chef Server
 Just include `posty` in your node's `run_list`:
@@ -93,10 +97,12 @@ providing all services mentioned above.
 
 The IP address assigned to the host is 192.168.254.10 which can be changed
 by adapting the parameter "config.vm.network" in the Vagrantfile accordingly.
+
 The setup takes a couple of minutes. After the installation has finished
 you can login to the machine by running: `vagrant ssh`
 The posty_api and the roundcube webmailer are reachable via HTTP and HTTPS
-under the same [IP](http://192.168.254.10).
+under the configured [IP](http://192.168.254.10). The mail services are
+reachable under the same IP.
 
 
 License and Authors
