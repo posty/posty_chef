@@ -1,6 +1,6 @@
-posty-chef - Chef cookbook to install a complete mailserver
+posty Cookbook
 ===========================================================
-Chef cookbook to install and configure a mail server with
+Chef cookbook for a full posty mail server installation with
 [Postfix](http://www.postfix.org/),
 [Dovecot](http://www.dovecot.org/),
 [Roundcube](http://roundcube.net/),
@@ -16,11 +16,11 @@ Requirements
 The following external cookbooks are used:
 
 * [apt](https://github.com/opscode-cookbooks/apt)
-* [clamav-chef](https://github.com/RoboticCheese/clamav-chef)
-* [cron](https://github.com/opscode-cookbooks/cron)
-* [logrotate](https://github.com/stevendanna/logrotate)
+* [clamav](https://github.com/RoboticCheese/clamav-chef)
 * [mysql](https://github.com/opscode-cookbooks/mysql)
 * [ruby_build](https://github.com/fnichol/chef-ruby_build)
+* [cron](https://github.com/opscode-cookbooks/cron) (via clamav)
+* [logrotate](https://github.com/stevendanna/logrotate) (via clamav)
 
 Additionally the following cookbooks must be present due to dependencies, but aren't executed:
 
@@ -35,6 +35,7 @@ The following platforms are currently supported and tested:
 
 * Ubuntu 12.04
 * Ubuntu 14.04
+* Debian 7.4
 
 
 Configuration
@@ -52,8 +53,10 @@ inexperienced Chef users.
 **Warning**: This recipe installs a complete mail server with many individual
 programms, thus changes a lot of system files. Using it on an unconfigured
 system is recommended.
-Also this recipe's original purpose is to provide a easy way to check out the
-posty-api and further steps should be taken for a production deployment.
+
+This recipe's original purpose is to provide an easy way to try out the
+posty-api. For usage in a production environment a manual customization/ review
+of the configuration is recommended.
 
 #### Chef Server
 Just include `posty` in your node's `run_list`:

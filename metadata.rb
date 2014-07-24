@@ -13,14 +13,9 @@ recipe "posty::roundcube", "Installs the roundcube webmailer from the package so
 recipe "posty::spamassassin", "Installs the spamassassin spam filter from the package sources"
 
 supports "ubuntu", ">= 12.04"
+supports "debian", ">= 7.0"
 
 depends "apt"
 depends "clamav"
-depends "cron"
-depends "logrotate"
 depends "mysql"
 depends "ruby_build"
-
-depends "yum"
-depends "yum-epel"
-depends "yum-mysql-community"
