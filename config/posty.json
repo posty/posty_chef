@@ -4,11 +4,11 @@
   },
   "posty": {
     "db": {
-      "password": "SETYOURPASSWORDHERE"
-	},
+      "dbpass": "SETYOURPASSWORDHERE"
+    },
     "roundcube": {
-	  "dbpass": "SETYOURPASSWORDHERE"
-	}
+      "dbpass": "SETYOURPASSWORDHERE"
+    }
   },
   "run_list": [
     "recipe[posty]"

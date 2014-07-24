@@ -55,7 +55,7 @@ end
 execute "import-sql-schema" do
   command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql && touch #{node["posty"]["conf_dir"]}/xchef-roundcube-mysql-imported"
   action :run
-  not_if {File.exists?("#{node["posty"]["conf_dir"]}/xchef-roundcube-mysql-imported")}
+  creates "#{node["posty"]["conf_dir"]}/xchef-roundcube-mysql-imported"
 end
 
 
