@@ -109,7 +109,7 @@ end
 execute "rake api_key:generate" do
   cwd node["posty"]["deploy"]["location"]
   environment ({'RACK_ENV' => node["posty"]["deploy"]["rack_env"]})
-  not_if "echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'",
+  not_if "echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -q -o [0-9a-z]{32}",
     :cwd => node["posty"]["deploy"]["location"]
 end
 
