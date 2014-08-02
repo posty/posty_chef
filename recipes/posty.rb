@@ -114,8 +114,8 @@ execute "rake api_key:generate" do
 end
 
 
-Chef::Log.info("[Install posty_webui]")
-if node["posty"]["webui"]["install"] == true
+if node["posty"]["webui"]["install"]
+  Chef::Log.info("[Install posty_webui]")
   git node["posty"]["webui"]["location"] do
     repository node["posty"]["webui"]["github"]
     revision node["posty"]["webui"]["revision"]
@@ -139,16 +139,24 @@ if node["posty"]["webui"]["install"] == true
 end
 
 
-Chef::Log.info("[Install posty_client]")
-if node["posty"]["client"]["install"] == true
+if node["posty"]["client"]["install"]
+  Chef::Log.info("[Install posty_client]")
   execute "install-posty_client" do
     command "/usr/local/bin/gem install posty_client"
     not_if "/usr/local/bin/gem list | grep -q posty_client"
   end
+  template node["posty"]["client"]["configpath"] do
+    source "posty/posty_client.yml.erb"
+    variables lazy {{ :apikey => `cd #{node["posty"]["api"]["location"]} &&
+                      echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
+    owner node["posty"]["client"]["user"]
+    group node["posty"]["client"]["group"]
+    mode "0644"
+  end
 end
 
 
-if node["posty"]["webindex"]["install"] == true
+if node["posty"]["webindex"]["install"]
   Chef::Log.info("[Add webindex]")
   template "/var/www/index.html" do
     source "posty/index.html"
