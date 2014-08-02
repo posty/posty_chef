@@ -9,7 +9,11 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
+<% if node["posty"]["clamav"]["install"] || node["posty"]["spamassassin"]["install"] %>
 smtp      inet  n       -       -       -       -       smtpd -o content_filter=filter:dummy
+<% else %>
+smtp      inet  n       -       -       -       -       smtpd
+<% end %>
 #smtp      inet  n       -       -       -       1       postscreen
 #smtpd     pass  -       -       -       -       -       smtpd
 #dnsblog   unix  -       -       -       -       0       dnsblog
@@ -118,6 +122,8 @@ scalemail-backend unix	-	n	n	-	2	pipe
 mailman   unix  -       n       n       -       -       pipe
   flags=FR user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py
   ${nexthop} ${user}
+<% if node["posty"]["clamav"]["install"] || node["posty"]["spamassassin"]["install"] %>
 filter    unix  -       n       n       -       4       pipe
   flags=Rq user=debian-spamd null_sender=
   argv=/usr/bin/mail-scanner.sh
+<% end %>

@@ -121,11 +121,13 @@ for template in [ "mysql-virtual-domain-aliases.cf",
     notifies :restart, "service[postfix]"
   end
 end
+
 template "/usr/bin/mail-scanner.sh" do
   source "postfix/mail-scanner.sh"
   owner "root"
   group "root"
   mode "0755"
+  only_if { node["posty"]["clamav"]["install"] || node["posty"]["spamassassin"]["install"] }
   notifies :restart, "service[postfix]"
 end
 

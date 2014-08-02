@@ -15,9 +15,10 @@ end
 
 include_recipe "apt"
 include_recipe "mysql::server"
-include_recipe "clamav"
 
 include_recipe "posty::postfix-dovecot"
 include_recipe "posty::posty"
-include_recipe "posty::roundcube"
-include_recipe "posty::spamassassin"
+
+include_recipe "clamav" if node["posty"]["clamav"]["install"]
+include_recipe "posty::spamassassin" if node["posty"]["spamassassin"]["install"]
+include_recipe "posty::roundcube" if node["posty"]["roundcube"]["install"]

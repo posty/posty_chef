@@ -22,7 +22,22 @@ suites:
         mysql:
             server_root_password: TESTKITCHENTEST
         posty:
-            roundcube:
-                dbpass: TESTKITCHENTEST
             db:
                 dbpass: TESTKITCHENTEST
+            roundcube:
+                dbpass: TESTKITCHENTEST
+  - name: minimal
+    run_list:
+      - recipe[posty::default]
+    attributes:
+        mysql:
+            server_root_password: TESTKITCHENTEST
+        posty:
+            db:
+                dbpass: TESTKITCHENTEST
+            roundcube:
+                dbpass: TESTKITCHENTEST
+            clamav:
+                install: false
+            spamassassin:
+                install: false

@@ -15,6 +15,7 @@ fi
 trap "rm -f $INPUT $OUTPUT" 0 1 2 3 15
 cat >$INPUT
 
+<% if node["posty"]["clamav"]["install"] %>
 /usr/bin/clamdscan --quiet - <$INPUT
 return="$?"
 if [ "$return" = 1 ]; then
@@ -24,8 +25,11 @@ elif [ "$return" != 0 ]; then
     logger -s -p mail.warning -t scanner "Temporary ClamAV failure $return, deferring"
     exit $EX_DEFER
 fi
+<% end %>
 
+<% if node["posty"]["spamassassin"]["install"] %>
 /usr/bin/spamc -u debian-spamd -E -x <$INPUT >$OUTPUT
+<% end %>
 
 $SENDMAIL "$@" <$OUTPUT
 exit $?
