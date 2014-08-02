@@ -84,33 +84,33 @@ end
 Chef::Log.info("[Install posty_api]")
 package "libmysqlclient-dev"
 
-git node["posty"]["deploy"]["location"] do
-  repository node["posty"]["deploy"]["github"]
-  revision node["posty"]["deploy"]["revision"]
-  user node["posty"]["deploy"]["user"]
-  group node["posty"]["deploy"]["group"]
+git node["posty"]["api"]["location"] do
+  repository node["posty"]["api"]["github"]
+  revision node["posty"]["api"]["revision"]
+  user node["posty"]["api"]["user"]
+  group node["posty"]["api"]["group"]
   action :sync
 end
-template "#{node["posty"]["deploy"]["location"]}/config/database.yml" do
+template "#{node["posty"]["api"]["location"]}/config/database.yml" do
   source "posty/database.yml.erb"
-  owner node["posty"]["deploy"]["user"]
-  group node["posty"]["deploy"]["group"]
+  owner node["posty"]["api"]["user"]
+  group node["posty"]["api"]["group"]
   mode "0644"
 end
 
 execute "bundle install" do
-  cwd node["posty"]["deploy"]["location"]
-  not_if 'bundle check', :cwd => node["posty"]["deploy"]["location"]
+  cwd node["posty"]["api"]["location"]
+  not_if 'bundle check', :cwd => node["posty"]["api"]["location"]
 end
 execute "rake db:migrate" do
-  cwd node["posty"]["deploy"]["location"]
-  environment ({'RACK_ENV' => node["posty"]["deploy"]["rack_env"]})
+  cwd node["posty"]["api"]["location"]
+  environment ({'RACK_ENV' => node["posty"]["api"]["rack_env"]})
 end
 execute "rake api_key:generate" do
-  cwd node["posty"]["deploy"]["location"]
-  environment ({'RACK_ENV' => node["posty"]["deploy"]["rack_env"]})
+  cwd node["posty"]["api"]["location"]
+  environment ({'RACK_ENV' => node["posty"]["api"]["rack_env"]})
   not_if "echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -q -o [0-9a-z]{32}",
-    :cwd => node["posty"]["deploy"]["location"]
+    :cwd => node["posty"]["api"]["location"]
 end
 
 
@@ -130,7 +130,7 @@ if node["posty"]["webui"]["install"] == true
   end
   template "#{node["posty"]["webui"]["location"]}/dist/settings.json" do
     source "posty/settings.json.erb"
-    variables lazy {{ :apikey => `cd #{node["posty"]["deploy"]["location"]} &&
+    variables lazy {{ :apikey => `cd #{node["posty"]["api"]["location"]} &&
                       echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
     owner node["posty"]["webui"]["user"]
     group node["posty"]["webui"]["group"]
