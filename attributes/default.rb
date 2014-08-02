@@ -20,7 +20,8 @@ default["clamav"]["clamd"]["enabled"]       = default["posty"]["clamav"]["instal
 default["freshclam"]["enabled"]             = default["posty"]["clamav"]["install"]
 default["freshclam"]["database_mirrors"]    = ["clamav.netcologne.de", "database.clamav.net"]
 
-default["posty"]["conf_dir"]        = "/var/tmp"
+default["posty"]["tmp_dir"]         = "/tmp"
+default["posty"]["var_dir"]         = "/var/lib/misc"
 default["posty"]["ruby"]["version"] = "2.0.0-p481"
 
 default["posty"]["mail"]["hostname"] = node["hostname"]

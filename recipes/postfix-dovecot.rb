@@ -16,10 +16,10 @@ end
 
 Chef::Log.info("[Create the vmail database user]")
 execute "mysql-create-vmail" do
-  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" < #{node["posty"]["conf_dir"]}/create-vmail.sql"
+  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" < #{node["posty"]["tmp_dir"]}/create-vmail.sql"
   action :nothing
 end
-template "#{node["posty"]["conf_dir"]}/create-vmail.sql" do
+template "#{node["posty"]["tmp_dir"]}/create-vmail.sql" do
   source "sql/create-vmail.sql.erb"
   owner "root"
   group "root"

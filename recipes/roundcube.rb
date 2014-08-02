@@ -42,10 +42,10 @@ end
 
 Chef::Log.info("[Create the mysql user and tables for roundcube]")
 execute "mysql-create-roundcube" do
-  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" < #{node["posty"]["conf_dir"]}/create-roundcube.sql"
+  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" < #{node["posty"]["tmp_dir"]}/create-roundcube.sql"
   action :nothing
 end
-template "#{node["posty"]["conf_dir"]}/create-roundcube.sql" do
+template "#{node["posty"]["tmp_dir"]}/create-roundcube.sql" do
   source "sql/create-roundcube.sql.erb"
   owner "root"
   group "root"
@@ -53,9 +53,9 @@ template "#{node["posty"]["conf_dir"]}/create-roundcube.sql" do
   notifies :run, "execute[mysql-create-roundcube]", :immediately
 end
 execute "import-sql-schema" do
-  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql && touch #{node["posty"]["conf_dir"]}/xchef-roundcube-mysql-imported"
+  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql && touch #{node["posty"]["var_dir"]}/chef-roundcube-mysql-imported"
   action :run
-  creates "#{node["posty"]["conf_dir"]}/xchef-roundcube-mysql-imported"
+  creates "#{node["posty"]["var_dir"]}/chef-roundcube-mysql-imported"
 end
 
 
