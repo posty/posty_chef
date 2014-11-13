@@ -38,7 +38,7 @@ default["posty"]["roundcube"]["dbuser"] = "roundcube"
 default["posty"]["roundcube"]["dbpass"] = ""
 
 default["posty"]["api"]["github"]   = "https://github.com/posty/posty_api"
-default["posty"]["api"]["revision"] = "sha512"
+default["posty"]["api"]["revision"] = "master"
 default["posty"]["api"]["location"] = "/srv/posty_api"
 default["posty"]["api"]["user"]     = "root"
 default["posty"]["api"]["group"]    = "www-data"
