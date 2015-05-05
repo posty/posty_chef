@@ -2,4 +2,4 @@ user = <%= node["posty"]["db"]["dbuser"]%>
 password = <%= node["posty"]["db"]["dbpass"] %>
 hosts = 127.0.0.1
 dbname = <%= node["posty"]["db"]["dbname"] %>
-query = SELECT 1 FROM users_view WHERE email='%s'
+query = SELECT "lmtp:unix:private/dovecot-lmtp" FROM users_view WHERE email='%s'

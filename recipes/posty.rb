@@ -109,7 +109,7 @@ end
 execute "rake api_key:generate" do
   cwd node["posty"]["api"]["location"]
   environment ({'RACK_ENV' => node["posty"]["api"]["rack_env"]})
-  not_if "echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -q -o [0-9a-z]{32}",
+  not_if "echo ApiKey.first.access_token | RACK_ENV=production bundle exec racksh | egrep -q -o [0-9a-z]{32}",
     :cwd => node["posty"]["api"]["location"]
 end
 
@@ -131,7 +131,7 @@ if node["posty"]["webui"]["install"]
   template "#{node["posty"]["webui"]["location"]}/dist/settings.json" do
     source "posty/settings.json.erb"
     variables lazy {{ :apikey => `cd #{node["posty"]["api"]["location"]} &&
-                      echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
+                      echo ApiKey.first.access_token | RACK_ENV=production bundle exec racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
     owner node["posty"]["webui"]["user"]
     group node["posty"]["webui"]["group"]
     mode "0644"
@@ -148,7 +148,7 @@ if node["posty"]["client"]["install"]
   template node["posty"]["client"]["configpath"] do
     source "posty/posty_client.yml.erb"
     variables lazy {{ :apikey => `cd #{node["posty"]["api"]["location"]} &&
-                      echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
+                      echo ApiKey.first.access_token | RACK_ENV=production bundle exec racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
     owner node["posty"]["client"]["user"]
     group node["posty"]["client"]["group"]
     mode "0644"

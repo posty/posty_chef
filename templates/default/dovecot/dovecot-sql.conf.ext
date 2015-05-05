@@ -107,12 +107,12 @@ default_pass_scheme = SHA512-CRYPT
 #  FROM users WHERE username = '%n' AND domain = '%d'
 
 password_query = \
-  SELECT email as user, \
+  SELECT email AS user, \
     password, \
-    CONCAT('/var/vmail/',SUBSTRING_INDEX(email,'@',-1),'/',SUBSTRING_INDEX(email,'@',1),'/') as userdb_home, \
-    5000 as userdb_uid, \
-    5000 as userdb_gid, quota \
-  FROM users_view WHERE email='%u';
+    '/srv/vmail/%Ld/%Ln' AS userdb_home, \
+    5000 AS userdb_uid, \
+    5000 AS userdb_gid, quota \
+  FROM users_view WHERE email='%Lu';
 
 # userdb query to retrieve the user information. It can return fields:
 #   uid - System UID (overrides mail_uid setting)
@@ -135,12 +135,11 @@ password_query = \
 #  FROM users WHERE username = '%n' AND domain = '%d'
 
 user_query = \
-  SELECT email as user, \
-    CONCAT('/var/vmail/',SUBSTRING_INDEX(email,'@',-1),'/',SUBSTRING_INDEX(email,'@',1),'/') as home, \
-    5000 as uid, \
-    5000 as gid, \
+  SELECT '/srv/vmail/%Ld/%Ln' AS home, \
+    5000 AS uid, \
+    5000 AS gid, \
     CONCAT('*:storage=', quota, 'B') AS quota_rule \
-  FROM users_view WHERE email = '%u';
+  FROM users_view WHERE email = '%Lu';
 
 # If you wish to avoid two SQL lookups (passdb + userdb), you can use
 # userdb prefetch instead of userdb sql in dovecot.conf. In that case you'll
@@ -152,4 +151,4 @@ user_query = \
 #  FROM users WHERE userid = '%u'
 
 # Query to get a list of all usernames.
-#iterate_query = SELECT username AS user FROM users
+iterate_query = SELECT email AS user FROM users_view

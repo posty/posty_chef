@@ -16,6 +16,7 @@ supports "ubuntu", ">= 12.04"
 supports "debian", ">= 7.0"
 
 depends "apt"
+depends "openssl"
 depends "clamav"
-depends "mysql"
+depends "mysql", "5.6.1"
 depends "ruby_build"

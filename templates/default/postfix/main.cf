@@ -1,6 +1,5 @@
 # See /usr/share/postfix/main.cf.dist for a commented, more complete version
 
-
 # Debian specific:  Specifying a file name will cause the first
 # line of that file to be used as the name.  The Debian default
 # is /etc/mailname.
@@ -17,38 +16,67 @@ append_dot_mydomain = no
 
 readme_directory = no
 
-# TLS parameters
+# helo vom client erfordert
+smtpd_helo_required = yes
+
+##### TLS settings ######
+tls_ssl_options = NO_COMPRESSION
+tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+
+### outgoing connections ###
+smtp_tls_security_level=may
+smtp_tls_protocols = !SSLv2, !SSLv3
+smtp_tls_ciphers = high
+smtp_tls_loglevel = 1
+smtp_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+smtp_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtp_tls_session_cache_database = btree:$data_directory/smtp_scache
+
+### incoming connections ###
+smtpd_tls_auth_only = yes
+smtpd_tls_security_level=may
+smtpd_tls_protocols = !SSLv2, !SSLv3
+smtpd_tls_ciphers = high
+smtpd_tls_loglevel = 0
 smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-smtpd_use_tls=yes
-smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
-smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_tls_session_cache_database = btree:$data_directory/smtpd_scache
 
 # SASL Auth
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
 smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous, noplaintext
+smtpd_sasl_tls_security_options = noanonymous
+broken_sasl_auth_clients = yes
 
 # Network
 myhostname = <%= node["posty"]["mail"]["hostname"] %>
 myorigin = <%= node["posty"]["mail"]["hostname"] %>
-mydestination = localhost
+mydestination = localhost <%= node["posty"]["mail"]["hostname"] %>
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
-mailbox_size_limit = 51200000
 recipient_delimiter = +
 inet_interfaces = all
 inet_protocols = all
 
-# Only allow mail transport if client is authenticated or in own network
-#smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
-smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated reject_unauth_destination
-
-# Use Dovecot LMTP Service to deliver Mails to Dovecot
-virtual_transport = lmtp:unix:private/dovecot-lmtp
+smtpd_relay_restrictions = 
+  reject_non_fqdn_recipient
+  reject_non_fqdn_sender
+  reject_unknown_sender_domain
+  reject_unknown_recipient_domain
+  permit_sasl_authenticated
+  permit_mynetworks
+  reject_unknown_helo_hostname
+  reject_sender_login_mismatch
+  reject_unauth_destination
+  reject_unverified_recipient
+  reject_unlisted_recipient
+  reject_multi_recipient_bounce
+  reject_non_fqdn_helo_hostname
+  reject_invalid_helo_hostname
+  permit
 
 # MySQL Connection
-virtual_mailbox_domains = mysql:/etc/postfix/virtual/mysql-virtual-mailbox-domains.cf
-virtual_mailbox_maps = mysql:/etc/postfix/virtual/mysql-virtual-mailbox-maps.cf
-virtual_alias_maps = mysql:/etc/postfix/virtual/mysql-virtual-user-aliases.cf, mysql:/etc/postfix/virtual/mysql-virtual-domain-aliases.cf
-transport_maps = mysql:/etc/postfix/virtual/mysql-virtual-transports.cf
-
+virtual_alias_maps = proxy:mysql:/etc/postfix/virtual/mysql-virtual-user-aliases.cf, proxy:mysql:/etc/postfix/virtual/mysql-virtual-domain-aliases.cf
+relay_domains = proxy:mysql:/etc/postfix/virtual/mysql-virtual-mailbox-domains.cf
+transport_maps = proxy:mysql:/etc/postfix/virtual/mysql-virtual-transports.cf, $relay_domains

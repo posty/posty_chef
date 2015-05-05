@@ -15,7 +15,7 @@ end
 
 
 Chef::Log.info("[Install roundcube]")
-%w{ roundcube roundcube-mysql }.each do |pkg|
+%w{ roundcube roundcube-mysql aspell-de }.each do |pkg|
     package pkg
 end
 
@@ -37,6 +37,7 @@ template "/etc/roundcube/main.inc.php" do
   mode "0640"
   owner "root"
   group "www-data"
+  variables(:company_name => node["posty"]["company_name"])
 end
 
 

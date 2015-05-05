@@ -1,6 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+required_plugins = %w( vagrant-omnibus vagrant-berkshelf vagrant-chef-zero )
+required_plugins.each do |plugin|
+    exec "vagrant plugin install #{plugin};vagrant #{ARGV.join(" ")}" unless Vagrant.has_plugin? plugin || ARGV[0] == 'plugin'
+end
+
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.require_version ">= 1.5.0"
 
@@ -30,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
-  config.vm.provision "chef_solo", run: "always" do |chef|
+  config.vm.provision "chef_zero", run: "always" do |chef|
     json = "config/posty.json"
     if File.exists?(json)
       config = JSON.parse(File.read(json))

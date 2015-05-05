@@ -1,6 +1,7 @@
 # Vagrant
 .vagrant/
 cookbooks/
+nodes/
 Berksfile.lock
 
 # Bundler
@@ -19,3 +20,6 @@ bin/*
 \#*#
 .*.sw[a-z]
 *.un~
+
+# Git
+.gitconfig
