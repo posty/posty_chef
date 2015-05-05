@@ -54,18 +54,6 @@ template "/etc/automx.conf" do
   variables(:domain => node["posty"]["mail"]["domain"], :server => node["posty"]["mail"]["hostname"])
 end
 
-template "/etc/apache2/conf-available/automx.conf" do
-  source "automx/apache.conf"
-  owner "root"
-  group "root"
-  mode "0644"
-  variables(:hostname => node["posty"]["mail"]["hostname"])
-end
-execute "enable-automx-conf" do
-  command "a2enconf automx.conf"
-  notifies :restart, "service[apache2]"
-end
-
 directory "/var/log/automx" do
   owner 'www-data'
   group 'www-data'

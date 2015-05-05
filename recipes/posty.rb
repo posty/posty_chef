@@ -78,13 +78,6 @@ execute "enable-apache2-sites" do
   notifies :restart, "service[apache2]"
 end
 
-Chef::Log.info("[Give apache access to the ssl key]")
-group "ssl-cert" do
-  action :modify
-  members "www-data"
-  append true
-end
-
 Chef::Log.info("[Install posty_api]")
 package "libmysqlclient-dev"
 

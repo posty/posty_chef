@@ -83,10 +83,16 @@ end
     owner "root"
     group "root"
     mode "0644"
-    variables(:master_user => node["posty"]["mail"]["master_user"])
+    variables(:master_user => node["posty"]["mail"]["master_user"], :cpu_cores => node["cpu"]["total"])
     notifies :restart, "service[dovecot]"
     notifies :restart, "service[postfix]"
   end
+end
+
+Chef::Log.info("[Increase inotify max_user_instances]")
+execute "increse inotify max_user_instances" do
+  command "echo 'fs.inotify.max_user_instances=8192' >> /etc/sysctl.conf"
+  not_if "grep 'fs.inotify.max_user_instances' /etc/sysctl.conf"
 end
 
 if node["posty"]["mail"]["master_user"]
