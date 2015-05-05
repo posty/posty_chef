@@ -77,6 +77,12 @@ execute "enable-apache2-sites" do
   command "a2ensite default-ssl.conf"
   notifies :restart, "service[apache2]"
 end
+template "/etc/apache2/ports.conf" do
+  source "apache/ports.conf"
+  owner "root"
+  group "root"
+  mode "0644"
+end
 
 Chef::Log.info("[Install posty_api]")
 package "libmysqlclient-dev"
@@ -173,8 +179,8 @@ if node["posty"]["webindex"]["install"]
     group "www-data"
     mode "0755"
   end
-  for file in [ "roundcube.png",
-                "posty.png" ] do
+  
+  %w( roundcube.png posty.png automx.png ).each do |file|
     cookbook_file "/var/www/img/#{file}" do
       source "img/#{file}"
       owner "www-data"
