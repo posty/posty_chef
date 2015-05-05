@@ -19,6 +19,7 @@ include_recipe "mysql::server"
 include_recipe "posty::postfix-dovecot"
 include_recipe "posty::posty"
 
+include_recipe "posty::d-push" if node["posty"]["d-push"]["install"]
 include_recipe "clamav" if node["posty"]["clamav"]["install"]
 include_recipe "posty::spamassassin" if node["posty"]["spamassassin"]["install"]
 include_recipe "posty::roundcube" if node["posty"]["roundcube"]["install"]

@@ -26,7 +26,7 @@ end
 
 
 Chef::Log.info("[Install apache]")
-package "apache2"
+package "apache2 apache2-utils"
 service 'apache2' do
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
@@ -66,18 +66,22 @@ end
 
 
 Chef::Log.info("[Configure apache]")
-for template in [ "000-default.conf",
-                  "default-ssl.conf" ] do
-  template "/etc/apache2/sites-available/#{template}" do
-    source "apache/#{template}"
-    owner "root"
-    group "root"
-    mode "0644"
-  end
+template "/etc/apache2/sites-available/default-ssl.conf" do
+  source "apache/default-ssl.conf"
+  owner "root"
+  group "root"
+  mode "0644"
 end
 execute "enable-apache2-sites" do
-  command "a2ensite 000-default.conf && a2ensite default-ssl.conf"
+  command "a2ensite default-ssl.conf"
   notifies :restart, "service[apache2]"
+end
+
+template "/etc/apache2/ports.conf" do
+  source "apache/ports.conf"
+  owner "root"
+  group "root"
+  mode "0644"
 end
 
 
@@ -135,6 +139,13 @@ if node["posty"]["webui"]["install"]
     owner node["posty"]["webui"]["user"]
     group node["posty"]["webui"]["group"]
     mode "0644"
+  end
+  template "/var/www/posty_webui/.htaccess" do
+    source "posty/posty_webui_htaccess"
+  end
+  execute "Create htpasswd" do
+    command "htpasswd -dbc /var/www/posty_webui/.htpasswd #{node["posty"]["webui"]["htaccess_user"]} #{node["posty"]["webui"]["htaccess_pass"]}"
+    not_if { File.exists?("/var/www/posty_webui/.htpasswd") }
   end
 end
 
