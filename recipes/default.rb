@@ -18,6 +18,7 @@ include_recipe "mysql::server"
 
 include_recipe "posty::postfix-dovecot"
 include_recipe "posty::posty"
+include_recipe "posty::automx"
 
 include_recipe "posty::d-push" if node["posty"]["d-push"]["install"]
 include_recipe "clamav" if node["posty"]["clamav"]["install"]

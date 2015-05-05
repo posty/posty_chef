@@ -71,19 +71,19 @@ template "/etc/apache2/sites-available/default-ssl.conf" do
   owner "root"
   group "root"
   mode "0644"
+  variables(:server => node["posty"]["mail"]["hostname"])
 end
 execute "enable-apache2-sites" do
   command "a2ensite default-ssl.conf"
   notifies :restart, "service[apache2]"
 end
 
-template "/etc/apache2/ports.conf" do
-  source "apache/ports.conf"
-  owner "root"
-  group "root"
-  mode "0644"
+Chef::Log.info("[Give apache access to the ssl key]")
+group "ssl-cert" do
+  action :modify
+  members "www-data"
+  append true
 end
-
 
 Chef::Log.info("[Install posty_api]")
 package "libmysqlclient-dev"

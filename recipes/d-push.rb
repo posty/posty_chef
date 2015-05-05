@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: posty
-# Recipe:: posty
+# Recipe:: d-push
 #
 # Copyright 2014, posty-soft.org
 #
