@@ -45,7 +45,7 @@
  *  Default settings
  */
     // Defines the default time zone, change e.g. to "Europe/London" if necessary
-    define('TIMEZONE', '');
+    define('TIMEZONE', 'Europe/Berlin');
 
     // Defines the base path on the server
     define('BASE_PATH', dirname($_SERVER['SCRIPT_FILENAME']). '/');
@@ -199,7 +199,7 @@
     // forward messages inline (default false - as attachment)
     define('IMAP_INLINE_FORWARD', false);
     // use imap_mail() to send emails (default) - if false mail() is used
-    define('IMAP_USE_IMAPMAIL', false);
+    define('IMAP_USE_IMAPMAIL', true);
     /* BEGIN fmbiete's contribution r1527, ZP-319 */
     // list of folders we want to exclude from sync. Names, or part of it, separated by |
     // example: dovecot.sieve|archive|spam

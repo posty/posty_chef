@@ -33,3 +33,11 @@ template "/etc/d-push/config.php" do
   group "root"
   mode "0644"
 end
+
+%w( z-push-admin.php z-push-top.php ).each do |file|
+  link "/root/#{file}" do
+    to "/usr/share/d-push/#{file}"
+    owner "root"
+    group "root"
+  end
+end
