@@ -19,4 +19,6 @@ Beste Grüße
 elsif allof (header :value "gt" :comparator "i;ascii-numeric" "X-Spam-Score" "10")
 {
         fileinto "Junk";
+        stop;
 }
+
