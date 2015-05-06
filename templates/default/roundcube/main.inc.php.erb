@@ -75,7 +75,7 @@ $rcmail_config['smtp_debug'] = false;
 // For example %n = mail.domain.tld, %t = domain.tld
 // WARNING: After hostname change update of mail_host column in users table is
 //          required to match old user data records with the new host.
-$rcmail_config['default_host'] = 'localhost';
+$rcmail_config['default_host'] = 'ssl://localhost';
 
 // TCP port used for IMAP connections
 $rcmail_config['default_port'] = 143;
@@ -143,7 +143,7 @@ $rcmail_config['messages_cache'] = false;
 // %d - domain (http hostname $_SERVER['HTTP_HOST'] without the first part)
 // %z - IMAP domain (IMAP hostname without the first part)
 // For example %n = mail.domain.tld, %t = domain.tld
-$rcmail_config['smtp_server'] = 'tls://localhost';
+$rcmail_config['smtp_server'] = 'ssl://localhost';
 
 // SMTP port (default is 25; use 587 for STARTTLS or 465 for the
 // deprecated SSL over SMTP (aka SMTPS))
@@ -219,7 +219,7 @@ $rcmail_config['message_cache_lifetime'] = '10d';
 // enforce connections over https
 // with this option enabled, all non-secure connections will be redirected.
 // set the port for the ssl connection as value of this option if it differs from the default 443
-$rcmail_config['force_https'] = false;
+$rcmail_config['force_https'] = true;
 
 // tell PHP that it should work as under secure connection
 // even if it doesn't recognize it as secure ($_SERVER['HTTPS'] is not set)
@@ -411,7 +411,7 @@ $rcmail_config['no_save_sent_messages'] = false;
 // ----------------------------------
 
 // List of active plugins (in plugins/ directory)
-$rcmail_config['plugins'] = array();
+$rcmail_config['plugins'] = array('jqueryui', 'sieverules', 'markasjunk', 'vcard_attachments');
 
 // ----------------------------------
 // USER INTERFACE
@@ -773,10 +773,10 @@ $rcmail_config['htmleditor'] = 0;
 $rcmail_config['prettydate'] = true;
 
 // save compose message every 300 seconds (5min)
-$rcmail_config['draft_autosave'] = 300;
+$rcmail_config['draft_autosave'] = 60;
 
 // default setting if preview pane is enabled
-$rcmail_config['preview_pane'] = false;
+$rcmail_config['preview_pane'] = true;
 
 // Mark as read when viewed in preview pane (delay in seconds)
 // Set to -1 if messages in preview pane should not be marked as read

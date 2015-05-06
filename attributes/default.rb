@@ -9,6 +9,7 @@
 
 default["posty"]["administrator_email_address"] = "info@example.com"
 default["posty"]["company_name"]            = "Posty"
+default["posty"]["certificate_name"]        = "ssl-cert-snakeoil" # change cert name and place certificate to /etc/ssl/certs/certificate_name.pem and key to /etc/ssl/private/certificate_name.key
 default["posty"]["mail"]["master_user"]     = false # if you set this value to a string e.g. "posty" the master user functionality will be activated and the masterusername is set to "posty". A secure_random password will be generated and written to /etc/dovecot/master-users
 
 default["posty"]["d-push"]["install"]       = true

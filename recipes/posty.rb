@@ -71,7 +71,7 @@ template "/etc/apache2/sites-available/default-ssl.conf" do
   owner "root"
   group "root"
   mode "0644"
-  variables(:server => node["posty"]["mail"]["hostname"])
+  variables(:server => node["posty"]["mail"]["hostname"], :certificate_name => node["posty"]["certificate_name"])
 end
 execute "enable-apache2-sites" do
   command "a2ensite default-ssl.conf"

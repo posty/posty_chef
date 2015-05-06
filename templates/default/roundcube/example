@@ -1,0 +1,22 @@
+require ["vacation","relational","comparator-i;ascii-numeric","fileinto"];
+
+# rule:[Abwesenheitsnachricht]
+if anyof (true)
+{
+        vacation
+                :days 4
+                :subject "Abwesenheitsnachricht"
+                text:
+Sehr geehrte Damen und Herren,
+
+vielen Dank f<C3><BC>r Ihre Nachricht! Sie erreichen mich wieder am Montag, den TT.MM.JJJJ. Ihre E-Mail wird nicht weitergeleitet.
+
+Beste Gr<C3><BC><C3><9F>e
+.
+;
+}
+# rule:[Spamfilter]
+elsif allof (header :value "gt" :comparator "i;ascii-numeric" "X-Spam-Score" "10")
+{
+        fileinto "Junk";
+}

@@ -77,13 +77,13 @@ template "/etc/dovecot/dovecot-sql.conf.ext" do
   mode "0640"
   notifies :restart, "service[dovecot]"
 end
-%w{ 10-auth.conf 10-mail.conf 10-master.conf 10-ssl.conf 15-lda.conf 15-mailboxes.conf 20-imap.conf 90-plugin.conf auth-sql.conf.ext }.each do |template|
+%w{ 10-auth.conf 10-mail.conf 10-master.conf 10-ssl.conf 15-lda.conf 15-mailboxes.conf 20-imap.conf 20-lmtp.conf 20-managesieve.conf 90-plugin.conf auth-sql.conf.ext }.each do |template|
   template "/etc/dovecot/conf.d/#{template}" do
     source "dovecot/conf.d/#{template}"
     owner "root"
     group "root"
     mode "0644"
-    variables(:master_user => node["posty"]["mail"]["master_user"], :cpu_cores => node["cpu"]["total"])
+    variables(:master_user => node["posty"]["mail"]["master_user"], :cpu_cores => node["cpu"]["total"], :certificate_name => node["posty"]["certificate_name"])
     notifies :restart, "service[dovecot]"
     notifies :restart, "service[postfix]"
   end
@@ -133,12 +133,13 @@ end
 
 
 Chef::Log.info("[Configure postfix]")
-for template in [ "master.cf", "main.cf" ] do
+%w( master.cf main.cf ).each do |template|
   template "/etc/postfix/#{template}" do
     source "postfix/#{template}"
     owner "root"
     group "root"
     mode "0644"
+    variables(:certificate_name => node["posty"]["certificate_name"])
     notifies :restart, "service[dovecot]"
     notifies :restart, "service[postfix]"
   end
