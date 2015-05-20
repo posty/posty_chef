@@ -78,7 +78,7 @@ $rcmail_config['smtp_debug'] = false;
 $rcmail_config['default_host'] = 'ssl://localhost';
 
 // TCP port used for IMAP connections
-$rcmail_config['default_port'] = 143;
+$rcmail_config['default_port'] = 993;
 
 // IMAP AUTH type (DIGEST-MD5, CRAM-MD5, LOGIN, PLAIN or null to use
 // best server supported one)
@@ -143,7 +143,7 @@ $rcmail_config['messages_cache'] = false;
 // %d - domain (http hostname $_SERVER['HTTP_HOST'] without the first part)
 // %z - IMAP domain (IMAP hostname without the first part)
 // For example %n = mail.domain.tld, %t = domain.tld
-$rcmail_config['smtp_server'] = 'ssl://localhost';
+$rcmail_config['smtp_server'] = 'tls://localhost';
 
 // SMTP port (default is 25; use 587 for STARTTLS or 465 for the
 // deprecated SSL over SMTP (aka SMTPS))
@@ -411,7 +411,7 @@ $rcmail_config['no_save_sent_messages'] = false;
 // ----------------------------------
 
 // List of active plugins (in plugins/ directory)
-$rcmail_config['plugins'] = array('jqueryui', 'sieverules', 'markasjunk', 'vcard_attachments');
+$rcmail_config['plugins'] = array('jqueryui', 'sieverules', 'markasjunk', 'archive', 'vcard_attachments');
 
 // ----------------------------------
 // USER INTERFACE

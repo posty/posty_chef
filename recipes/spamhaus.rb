@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: posty
-# Recipe:: automx
+# Recipe:: spamhaus
 #
 # Copyright 2014, posty-soft.org
 #
@@ -13,4 +13,10 @@ template "/etc/cron.daily/spamhaus" do
   owner "root"
   group "root"
   mode "0755"
+  notifies :run, "execute[spamhaus]", :immediately
+end
+
+execute "spamhaus" do
+  command "/etc/cron.daily/spamhaus"
+  action :nothing
 end

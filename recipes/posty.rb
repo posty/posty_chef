@@ -64,6 +64,10 @@ execute "passenger-module-apache-enable" do
   notifies :restart, "service[apache2]"
 end
 
+execute "headers-module-apache-enable" do
+  command "a2enmod headers"
+  notifies :restart, "service[apache2]"
+end
 
 Chef::Log.info("[Configure apache]")
 template "/etc/apache2/sites-available/default-ssl.conf" do

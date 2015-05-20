@@ -111,7 +111,8 @@ password_query = \
     password, \
     '/srv/vmail/%Ld/%Ln' AS userdb_home, \
     5000 AS userdb_uid, \
-    5000 AS userdb_gid, quota \
+    5000 AS userdb_gid, \
+    CONCAT('*:storage=', quota, 'M') AS userdb_quota_rule \
   FROM users_view WHERE email='%Lu';
 
 # userdb query to retrieve the user information. It can return fields:
@@ -138,7 +139,7 @@ user_query = \
   SELECT '/srv/vmail/%Ld/%Ln' AS home, \
     5000 AS uid, \
     5000 AS gid, \
-    CONCAT('*:storage=', quota, 'B') AS quota_rule \
+    CONCAT('*:storage=', quota, 'M') AS quota_rule \
   FROM users_view WHERE email = '%Lu';
 
 # If you wish to avoid two SQL lookups (passdb + userdb), you can use

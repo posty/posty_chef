@@ -1,0 +1,6 @@
+Sehr geehrter Benutzer,
+ 
+Ihr E-Mail Konto hat den verfügbaren Speicherplatz überschritten.
+Um dieses Problem zu beseitigen löschen Sie entweder E-Mails aus Ihrem Postfach oder kontaktieren Sie Ihren Mailserver Betreiber.
+ 
+Ihr Postmaster

@@ -11,7 +11,17 @@
 automx_path = "/srv/automx"
 
 Chef::Log.info("[Install automx]")
-package "memcached python-sqlalchemy python-mysqldb dnsutils"
+package "memcached python-sqlalchemy python-mysqldb dnsutils python-lxml python-ipaddr python-dateutil python-m2crypto libapache2-mod-wsgi"
+
+execute "enable-apache2-wsgi" do
+  command "a2enmod wsgi"
+  notifies :restart, "service[apache2]"
+end
+
+execute "enable-apache2-rewrite" do
+  command "a2enmod rewrite"
+  notifies :restart, "service[apache2]"
+end
 
 git "#{automx_path}" do
   repository "https://github.com/sys4/automx.git"

@@ -1,16 +1,3 @@
-# Root Path
-MAILPATH=/srv/vmail
+#!/bin/sh
 
-logger "Start Dovecot-Purge"
-cd $MAILPATH
-
-for DOMAIN in * ; do
-  cd $MAILPATH/$DOMAIN
-  for USER in * ; do
-    if [ -e $USER/mdbox ] ; then
-      /usr/bin/doveadm purge -u $USER@$DOMAIN
-    fi
-  done
-done
-
-logger "Finished Dovecot-Purge"
+doveadm purge -A

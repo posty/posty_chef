@@ -1,0 +1,1 @@
+<%= @selector %> <%= @fqdn_domain_part %>:<%= @hostname_with_time %>:/etc/opendkim/dkim.key

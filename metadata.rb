@@ -16,7 +16,10 @@ supports "ubuntu", ">= 12.04"
 supports "debian", ">= 7.0"
 
 depends "apt"
-depends "openssl"
+depends "locale"
+depends 'timezone_lwrp'
 depends "clamav"
-depends "mysql", "5.6.1"
+depends "openssl"
+depends "mysqld"
 depends "ruby_build"
+depends "logstash-forwarder"
