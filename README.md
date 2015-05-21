@@ -65,6 +65,8 @@ default['mysqld']['root_password']          = "" # set a password for your mysql
 default["posty"]["mail"]["domain"]          = "example.com" # This domain is used to generate the postmaster address for emails from the local root user and other important notifications if the domain is example.com we use postmaster@example.com for postmaster notifications and .forward file
 default["posty"]["db"]["dbpass"]            = "" # this password is for the database for posty
 default["posty"]["roundcube"]["dbpass"]     = "" # this password is for the roundcube database
+default["posty"]["webui"]["htaccess_user"]  = "" # set the htaccess user for the webui
+default["posty"]["webui"]["htaccess_pass"]  = "" # set the htaccess password for the webui
 ```
 
 #### Chef Zero
@@ -78,6 +80,8 @@ default['mysqld']['root_password']          = "" # set a password for your mysql
 default["posty"]["mail"]["domain"]          = "example.com" # This domain is used to generate the postmaster address for emails from the local root user and other important notifications if the domain is example.com we use postmaster@example.com for postmaster notifications and .forward file
 default["posty"]["db"]["dbpass"]            = "" # this password is for the database for posty
 default["posty"]["roundcube"]["dbpass"]     = "" # this password is for the roundcube database
+default["posty"]["webui"]["htaccess_user"]  = "" # set the htaccess user for the webui
+default["posty"]["webui"]["htaccess_pass"]  = "" # set the htaccess password for the webui
 ```
 
 First create a chef repo for the box you will create eg. mail.example.com
