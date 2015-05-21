@@ -16,7 +16,7 @@ default["posty"]["d-push"]["install"]             = true
 default["posty"]["spamhaus_blacklist"]["install"] = true
 default["posty"]["roundcube"]["install"]          = true
 
-default["posty"]["webindex"]["install"]           = false
+default["posty"]["webindex"]["install"]           = true
 default["posty"]["webui"]["install"]              = true
 default["posty"]["client"]["install"]             = true
 default["clamav"]["clamd"]["enabled"]             = true
@@ -25,14 +25,14 @@ default["clamav"]["freshclam"]["enabled"]         = true
 default['clamav']['clamd']['local_socket']            = "/var/run/clamav/clamd.ctl"
 default["clamav"]["freshclam"]["database_mirrors"]    = ["clamav.netcologne.de", "database.clamav.net"]
 
-default['mysqld']['root_password']   = "test123"
+default['mysqld']['root_password']   = ""
 
 default["posty"]["tmp_dir"]          = "/tmp"
 default["posty"]["var_dir"]          = "/var/lib/misc"
 default["posty"]["ruby"]["version"]  = "2.0.0-p481"
 
 default["posty"]["mail"]["hostname"] = node['fqdn']
-default["posty"]["mail"]["domain"]   = "webflow.de" # This domain is used to generate the postmaster address for emails from the local root user and other important notifications if the domain is example.com we use postmaster@example.com for postmaster notifications and .forward file
+default["posty"]["mail"]["domain"]   = "example.com" # This domain is used to generate the postmaster address for emails from the local root user and other important notifications if the domain is example.com we use postmaster@example.com for postmaster notifications and .forward file
 
 default["posty"]["db"]["host"]   = "localhost"
 default["posty"]["db"]["dbname"] = "vmail"
