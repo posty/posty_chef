@@ -4,3 +4,7 @@ use <%= node["posty"]["roundcube"]["dbname"] %>;
 GRANT ALL ON <%= node["posty"]["roundcube"]["dbname"] %>.* \
 	TO '<%= node["posty"]["roundcube"]["dbuser"]%>'@'localhost' \
 	IDENTIFIED BY '<%= node["posty"]["roundcube"]["dbpass"] %>';
+
+#GRANT EXECUTE ON PROCEDURE '<%= node["posty"]["db"]["dbname"] %>'.update_passwd \
+#  TO '<%= node["posty"]["roundcube"]["dbuser"]%>' \
+#  IDENTIFIED BY '<%= node["posty"]["roundcube"]["dbpass"] %>';

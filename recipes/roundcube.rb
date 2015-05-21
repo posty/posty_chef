@@ -15,7 +15,7 @@ end
 
 
 Chef::Log.info("[Install roundcube]")
-%w{ roundcube roundcube-mysql }.each do |pkg|
+%w{ roundcube roundcube-mysql roundcube-plugins aspell-de }.each do |pkg|
     package pkg
 end
 
@@ -37,12 +37,13 @@ template "/etc/roundcube/main.inc.php" do
   mode "0640"
   owner "root"
   group "www-data"
+  variables(:company_name => node["posty"]["company_name"])
 end
 
 
 Chef::Log.info("[Create the mysql user and tables for roundcube]")
 execute "mysql-create-roundcube" do
-  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" < #{node["posty"]["tmp_dir"]}/create-roundcube.sql"
+  command "/usr/bin/mysql -u root -p\"#{node["mysqld"]["root_password"]}\" < #{node["posty"]["tmp_dir"]}/create-roundcube.sql"
   action :nothing
 end
 template "#{node["posty"]["tmp_dir"]}/create-roundcube.sql" do
@@ -53,11 +54,53 @@ template "#{node["posty"]["tmp_dir"]}/create-roundcube.sql" do
   notifies :run, "execute[mysql-create-roundcube]", :immediately
 end
 execute "import-sql-schema" do
-  command "/usr/bin/mysql -u root -p\"#{node["mysql"]["server_root_password"]}\" roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql && touch #{node["posty"]["var_dir"]}/chef-roundcube-mysql-imported"
+  command "/usr/bin/mysql -u root -p\"#{node["mysqld"]["root_password"]}\" roundcube < /usr/share/dbconfig-common/data/roundcube/install/mysql && touch #{node["posty"]["var_dir"]}/chef-roundcube-mysql-imported"
   action :run
   creates "#{node["posty"]["var_dir"]}/chef-roundcube-mysql-imported"
 end
 
+Chef::Log.info("[Install sieverules plugin]")
+git "/usr/share/roundcube/plugins/sieverules" do
+  repository "https://github.com/JohnDoh/Roundcube-Plugin-SieveRules-Managesieve.git"
+  revision "rc-0.9"
+  user "root"
+  group "root"
+  action :checkout
+end
+link "/var/lib/roundcube/plugins/sieverules" do
+  to "/usr/share/roundcube/plugins/sieverules"
+  owner "root"
+  group "root"
+end
+directory "/etc/roundcube/plugins/sieverules" do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+template "/etc/roundcube/plugins/sieverules/config.inc.php" do
+  source "roundcube/sieverules.conf"
+  mode "0644"
+  owner "root"
+  group "root"
+end
+link "/usr/share/roundcube/plugins/sieverules/config.inc.php" do
+  to "/etc/roundcube/plugins/sieverules/config.inc.php"
+  owner "root"
+  group "root"
+end
+directory "/etc/dovecot/sieve" do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+template "/etc/dovecot/sieve/example" do
+  source "roundcube/example"
+  mode "0644"
+  owner "root"
+  group "root"
+end
 
 Chef::Log.info("[Enable roundcube]")
 execute "php5-enable-mcrypt" do

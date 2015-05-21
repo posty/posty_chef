@@ -36,13 +36,15 @@ required_score 50000.0
 
 #   Use Bayesian classifier (default: 1)
 #
-use_bayes 0
+use_bayes 1
 
 
 #   Bayesian classifier auto-learning (default: 1)
 #
-bayes_auto_learn 0
+bayes_auto_learn 1
 
+use_razor2 1
+use_pyzor 1
 
 #   Set headers which may provide inappropriate cues to the Bayesian
 #   classifier
@@ -50,7 +52,6 @@ bayes_auto_learn 0
 # bayes_ignore_header X-Bogosity
 # bayes_ignore_header X-Spam-Flag
 # bayes_ignore_header X-Spam-Status
-
 
 #   Some shortcircuiting, if the plugin is enabled
 # 
@@ -78,8 +79,8 @@ ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 
 #   and a well-trained bayes DB can save running rules, too
 #
-# shortcircuit BAYES_99                spam
-# shortcircuit BAYES_00                ham
+shortcircuit BAYES_99                spam
+shortcircuit BAYES_00                ham
 
 endif # Mail::SpamAssassin::Plugin::Shortcircuit
 

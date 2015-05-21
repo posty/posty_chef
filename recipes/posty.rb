@@ -26,7 +26,7 @@ end
 
 
 Chef::Log.info("[Install apache]")
-package "apache2"
+package "apache2 apache2-utils"
 service 'apache2' do
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
@@ -64,22 +64,29 @@ execute "passenger-module-apache-enable" do
   notifies :restart, "service[apache2]"
 end
 
-
-Chef::Log.info("[Configure apache]")
-for template in [ "000-default.conf",
-                  "default-ssl.conf" ] do
-  template "/etc/apache2/sites-available/#{template}" do
-    source "apache/#{template}"
-    owner "root"
-    group "root"
-    mode "0644"
-  end
-end
-execute "enable-apache2-sites" do
-  command "a2ensite 000-default.conf && a2ensite default-ssl.conf"
+execute "headers-module-apache-enable" do
+  command "a2enmod headers"
   notifies :restart, "service[apache2]"
 end
 
+Chef::Log.info("[Configure apache]")
+template "/etc/apache2/sites-available/default-ssl.conf" do
+  source "apache/default-ssl.conf"
+  owner "root"
+  group "root"
+  mode "0644"
+  variables(:server => node["posty"]["mail"]["hostname"], :certificate_name => node["posty"]["certificate_name"])
+end
+execute "enable-apache2-sites" do
+  command "a2ensite default-ssl.conf"
+  notifies :restart, "service[apache2]"
+end
+template "/etc/apache2/ports.conf" do
+  source "apache/ports.conf"
+  owner "root"
+  group "root"
+  mode "0644"
+end
 
 Chef::Log.info("[Install posty_api]")
 package "libmysqlclient-dev"
@@ -109,7 +116,7 @@ end
 execute "rake api_key:generate" do
   cwd node["posty"]["api"]["location"]
   environment ({'RACK_ENV' => node["posty"]["api"]["rack_env"]})
-  not_if "echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -q -o [0-9a-z]{32}",
+  not_if "echo ApiKey.first.access_token | RACK_ENV=production bundle exec racksh | egrep -q -o [0-9a-z]{32}",
     :cwd => node["posty"]["api"]["location"]
 end
 
@@ -131,10 +138,17 @@ if node["posty"]["webui"]["install"]
   template "#{node["posty"]["webui"]["location"]}/dist/settings.json" do
     source "posty/settings.json.erb"
     variables lazy {{ :apikey => `cd #{node["posty"]["api"]["location"]} &&
-                      echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
+                      echo ApiKey.first.access_token | RACK_ENV=production bundle exec racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
     owner node["posty"]["webui"]["user"]
     group node["posty"]["webui"]["group"]
     mode "0644"
+  end
+  template "/var/www/posty_webui/.htaccess" do
+    source "posty/posty_webui_htaccess"
+  end
+  execute "Create htpasswd" do
+    command "htpasswd -dbc /var/www/posty_webui/.htpasswd #{node["posty"]["webui"]["htaccess_user"]} #{node["posty"]["webui"]["htaccess_pass"]}"
+    not_if { File.exists?("/var/www/posty_webui/.htpasswd") }
   end
 end
 
@@ -148,7 +162,7 @@ if node["posty"]["client"]["install"]
   template node["posty"]["client"]["configpath"] do
     source "posty/posty_client.yml.erb"
     variables lazy {{ :apikey => `cd #{node["posty"]["api"]["location"]} &&
-                      echo ApiKey.first.access_token | RACK_ENV=production racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
+                      echo ApiKey.first.access_token | RACK_ENV=production bundle exec racksh | egrep -o [0-9a-z]{32} | tr -d '\n'` }}
     owner node["posty"]["client"]["user"]
     group node["posty"]["client"]["group"]
     mode "0644"
@@ -169,8 +183,8 @@ if node["posty"]["webindex"]["install"]
     group "www-data"
     mode "0755"
   end
-  for file in [ "roundcube.png",
-                "posty.png" ] do
+  
+  %w( roundcube.png posty.png automx.png ).each do |file|
     cookbook_file "/var/www/img/#{file}" do
       source "img/#{file}"
       owner "www-data"

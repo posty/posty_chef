@@ -1,0 +1,43 @@
+use strict;
+
+#
+# Place your configuration directives here.  They will override those in
+# earlier files.
+#
+# See /usr/share/doc/amavisd-new/ for documentation and examples of
+# the directives you can use in this file
+#
+
+@bypass_virus_checks_maps = (
+   \%bypass_virus_checks, \@bypass_virus_checks_acl, \$bypass_virus_checks_re);
+
+@bypass_spam_checks_maps = (
+   \%bypass_spam_checks, \@bypass_spam_checks_acl, \$bypass_spam_checks_re);
+
+$enable_dkim_verification = 1;
+# Don't be verbose about sending mail:
+@whitelist_sender_acl = qw( .$mydomain );
+$final_virus_destiny      = D_REJECT; # (defaults to D_BOUNCE)
+$final_banned_destiny     = D_REJECT;  # (defaults to D_BOUNCE)
+$final_spam_destiny       = D_REJECT;  # (defaults to D_REJECT)
+$final_bad_header_destiny = D_REJECT;  # (defaults to D_PASS), D_BOUNCE suggested
+
+$sa_spam_subject_tag = '';
+$sa_tag_level_deflt  = 2.0;  # add spam info headers if at, or above that level
+$sa_tag2_level_deflt = 6.31; # add 'spam detected' headers at that level
+$sa_kill_level_deflt = 6.31; # triggers spam evasive actions
+$sa_dsn_cutoff_level = 10;   # spam level beyond which a DSN is not sent
+
+$virus_quarantine_method = $spam_quarantine_method = $banned_files_quarantine_method = $bad_header_quarantine_method = undef;
+
+$virus_admin = "postmaster\@<%= node["posty"]["mail"]["domain"] %>"; # due to D_DISCARD default
+#$spam_admin = "postmaster\@<%= node["posty"]["mail"]["domain"] %>";
+
+@lookup_sql_dsn = (
+    ['DBI:mysql:database=<%= node["posty"]["db"]["dbname"] %>;host=127.0.0.1;port=3306',
+     '<%= node["posty"]["db"]["dbuser"] %>',
+     '<%= node["posty"]["db"]["dbpass"] %>']);
+$sql_select_policy = 'SELECT name FROM virtual_domains WHERE CONCAT("@",name) IN (%k)';
+
+#------------ Do not modify anything below this line -------------
+1;  # ensure a defined return

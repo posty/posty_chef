@@ -9,34 +9,37 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
-<% if node["posty"]["clamav"]["install"] || node["posty"]["spamassassin"]["install"] %>
-smtp      inet  n       -       -       -       -       smtpd -o content_filter=filter:dummy
-<% else %>
 smtp      inet  n       -       -       -       -       smtpd
-<% end %>
+  -o smtpd_proxy_filter=localhost:10024
 #smtp      inet  n       -       -       -       1       postscreen
 #smtpd     pass  -       -       -       -       -       smtpd
 #dnsblog   unix  -       -       -       -       0       dnsblog
 #tlsproxy  unix  -       -       -       -       0       tlsproxy
-submission inet n       -       -       -       -       smtpd -v
+submission inet n       -       -       -       -       smtpd
   -o syslog_name=postfix/submission
   -o smtpd_tls_security_level=encrypt
-  -o smtpd_sasl_type=dovecot
-  -o smtpd_sasl_path=private/auth
-  -o smtpd_sasl_security_options=noanonymous
   -o smtpd_sasl_auth_enable=yes
   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
-#smtps     inet  n       -       -       -       -       smtpd
-#  -o syslog_name=postfix/smtps
-#  -o smtpd_tls_wrappermode=yes
-#  -o smtpd_sasl_auth_enable=yes
-#  -o smtpd_reject_unlisted_recipient=no
-#  -o smtpd_client_restrictions=$mua_client_restrictions
-#  -o smtpd_helo_restrictions=$mua_helo_restrictions
-#  -o smtpd_sender_restrictions=$mua_sender_restrictions
-#  -o smtpd_recipient_restrictions=
-#  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
-#  -o milter_macro_daemon_name=ORIGINATING
+  -o milter_macro_daemon_name=ORIGINATING
+  -o smtpd_proxy_filter=127.0.0.1:10024
+smtps     inet  n       -       -       -       -       smtpd
+  -o syslog_name=postfix/smtps
+  -o smtpd_tls_wrappermode=yes
+  -o smtpd_proxy_filter=127.0.0.1:10024
+127.0.0.1:10025 inet  n   -     n       -       -       smtpd
+  -o smtpd_delay_reject=no
+  -o smtpd_client_restrictions=
+  -o smtpd_helo_restrictions=
+  -o smtpd_sender_restrictions=
+  -o smtpd_recipient_restrictions=permit_mynetworks,reject
+  -o smtpd_data_restrictions=reject_unauth_pipelining
+  -o smtpd_end_of_data_restrictions=
+  -o smtpd_restriction_classes=
+  -o mynetworks=127.0.0.0/8
+  -o receive_override_options=no_header_body_checks,no_unknown_recipient_checks,no_milters
+  -o local_header_rewrite_clients=
+  -o smtpd_authorized_xforward_hosts=127.0.0.0/8
+  -o smtpd_proxy_filter=
 #628       inet  n       -       -       -       -       qmqpd
 pickup    unix  n       -       -       60      1       pickup
 cleanup   unix  n       -       -       -       0       cleanup
@@ -76,8 +79,8 @@ scache    unix  -       -       -       -       1       scache
 # maildrop. See the Postfix MAILDROP_README file for details.
 # Also specify in main.cf: maildrop_destination_recipient_limit=1
 #
-maildrop  unix  -       n       n       -       -       pipe
-  flags=DRhu user=vmail argv=/usr/bin/maildrop -d ${recipient}
+#maildrop  unix  -       n       n       -       -       pipe
+#  flags=DRhu user=vmail argv=/usr/bin/maildrop -d ${recipient}
 #
 # ====================================================================
 #
@@ -122,8 +125,3 @@ scalemail-backend unix	-	n	n	-	2	pipe
 mailman   unix  -       n       n       -       -       pipe
   flags=FR user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py
   ${nexthop} ${user}
-<% if node["posty"]["clamav"]["install"] || node["posty"]["spamassassin"]["install"] %>
-filter    unix  -       n       n       -       4       pipe
-  flags=Rq user=debian-spamd null_sender=
-  argv=/usr/bin/mail-scanner.sh
-<% end %>

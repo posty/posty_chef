@@ -1,0 +1,4 @@
+AuthUserFile /var/www/posty_webui/.htpasswd
+AuthName "Please Enter Password"
+AuthType Basic
+Require valid-user

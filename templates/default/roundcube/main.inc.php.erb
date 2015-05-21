@@ -25,7 +25,7 @@ $rcmail_config = array();
 $rcmail_config['debug_level'] = 1;
 
 // log driver:  'syslog' or 'file'.
-$rcmail_config['log_driver'] = 'file';
+$rcmail_config['log_driver'] = 'syslog';
 
 // date format for log entries
 // (read http://php.net/manual/en/function.date.php for all format characters)  
@@ -75,10 +75,10 @@ $rcmail_config['smtp_debug'] = false;
 // For example %n = mail.domain.tld, %t = domain.tld
 // WARNING: After hostname change update of mail_host column in users table is
 //          required to match old user data records with the new host.
-$rcmail_config['default_host'] = 'localhost';
+$rcmail_config['default_host'] = 'ssl://localhost';
 
 // TCP port used for IMAP connections
-$rcmail_config['default_port'] = 143;
+$rcmail_config['default_port'] = 993;
 
 // IMAP AUTH type (DIGEST-MD5, CRAM-MD5, LOGIN, PLAIN or null to use
 // best server supported one)
@@ -143,11 +143,11 @@ $rcmail_config['messages_cache'] = false;
 // %d - domain (http hostname $_SERVER['HTTP_HOST'] without the first part)
 // %z - IMAP domain (IMAP hostname without the first part)
 // For example %n = mail.domain.tld, %t = domain.tld
-$rcmail_config['smtp_server'] = 'localhost';
+$rcmail_config['smtp_server'] = 'tls://localhost';
 
 // SMTP port (default is 25; use 587 for STARTTLS or 465 for the
 // deprecated SSL over SMTP (aka SMTPS))
-$rcmail_config['smtp_port'] = 25;
+$rcmail_config['smtp_port'] = 587;
 
 // SMTP username (if required) if you use %u as the username Roundcube
 // will use the current username for login
@@ -187,7 +187,7 @@ $rcmail_config['smtp_timeout'] = 0;
 $rcmail_config['enable_installer'] = false;
 
 // don't allow these settings to be overriden by the user
-$rcmail_config['dont_override'] = array();
+$rcmail_config['dont_override'] = array("skip_deleted","check_all_folders","date_format","time_format","flag_for_deletion");
 
 // provide an URL where a user can get support for this Roundcube installation
 // PLEASE DO NOT LINK TO THE ROUNDCUBE.NET WEBSITE HERE!
@@ -219,7 +219,7 @@ $rcmail_config['message_cache_lifetime'] = '10d';
 // enforce connections over https
 // with this option enabled, all non-secure connections will be redirected.
 // set the port for the ssl connection as value of this option if it differs from the default 443
-$rcmail_config['force_https'] = false;
+$rcmail_config['force_https'] = true;
 
 // tell PHP that it should work as under secure connection
 // even if it doesn't recognize it as secure ($_SERVER['HTTPS'] is not set)
@@ -311,20 +311,20 @@ $rcmail_config['mail_domain'] = '';
 $rcmail_config['password_charset'] = 'ISO-8859-1';
 
 // How many seconds must pass between emails sent by a user
-$rcmail_config['sendmail_delay'] = 0;
+$rcmail_config['sendmail_delay'] = 3;
 
 // Maximum number of recipients per message. Default: 0 (no limit)
-$rcmail_config['max_recipients'] = 0; 
+$rcmail_config['max_recipients'] = 50; 
 
 // Maximum allowednumber of members of an address group. Default: 0 (no limit)
 // If 'max_recipients' is set this value should be less or equal
-$rcmail_config['max_group_members'] = 0; 
+$rcmail_config['max_group_members'] = 50; 
 
 // add this user-agent to message headers when sending
 $rcmail_config['useragent'] = 'Roundcube Webmail/'.RCMAIL_VERSION;
 
 // use this name to compose page titles
-$rcmail_config['product_name'] = 'Roundcube Webmail';
+$rcmail_config['product_name'] = '<%= @company_name %> Webmail';
 
 // try to load host-specific configuration
 // see http://trac.roundcube.net/wiki/Howto_Config for more details
@@ -368,7 +368,7 @@ $rcmail_config['mdn_use_from'] = false;
 // 2 - one identity with possibility to edit all params
 // 3 - one identity with possibility to edit all params but not email address
 // 4 - one identity with possibility to edit only signature
-$rcmail_config['identities_level'] = 0;
+$rcmail_config['identities_level'] = 1;
 
 // Mimetypes supported by the browser.
 // attachments of these types will open in a preview window
@@ -400,7 +400,7 @@ $rcmail_config['image_thumbnail_size'] = 240;
 $rcmail_config['contact_photo_size'] = 160;
 
 // Enable DNS checking for e-mail address validation
-$rcmail_config['email_dns_check'] = false;
+$rcmail_config['email_dns_check'] = true;
 
 // Disables saving sent messages in Sent folder (like gmail) (Default: false)
 // Note: useful when SMTP server stores sent mail in user mailbox
@@ -411,7 +411,7 @@ $rcmail_config['no_save_sent_messages'] = false;
 // ----------------------------------
 
 // List of active plugins (in plugins/ directory)
-$rcmail_config['plugins'] = array();
+$rcmail_config['plugins'] = array('jqueryui', 'sieverules', 'markasjunk', 'archive', 'vcard_attachments');
 
 // ----------------------------------
 // USER INTERFACE
@@ -430,10 +430,10 @@ $rcmail_config['list_cols'] = array('subject', 'status', 'fromto', 'date', 'size
 
 // the default locale setting (leave empty for auto-detection)
 // RFC1766 formatted language name like en_US, de_DE, de_CH, fr_FR, pt_BR
-$rcmail_config['language'] = 'en_US';
+$rcmail_config['language'] = 'de_DE';
 
 // use this format for date display (date or strftime format)
-$rcmail_config['date_format'] = 'Y-m-d';
+$rcmail_config['date_format'] = 'd.m.Y';
 
 // give this choice of date formats to the user to select from
 // Note: do not use ambiguous formats like m/d/Y
@@ -449,7 +449,7 @@ $rcmail_config['time_formats'] = array('G:i', 'H:i', 'g:i a', 'h:i A');
 $rcmail_config['date_short'] = 'D H:i';
 
 // use this format for detailed date/time formatting (derived from date_format and time_format)
-$rcmail_config['date_long'] = 'Y-m-d H:i';
+$rcmail_config['date_long'] = 'd.m.Y H:i';
 
 // store draft message is this mailbox
 // leave blank if draft messages should not be stored
@@ -482,7 +482,7 @@ $rcmail_config['create_default_folders'] = false;
 $rcmail_config['protect_default_folders'] = true;
 
 // if in your system 0 quota means no limit set this option to true 
-$rcmail_config['quota_zero_as_unlimited'] = false;
+$rcmail_config['quota_zero_as_unlimited'] = true;
 
 // Make use of the built-in spell checker. It is based on GoogieSpell.
 // Since Google only accepts connections over https your PHP installatation
@@ -506,16 +506,16 @@ $rcmail_config['spellcheck_uri'] = '';
 // These languages can be selected for spell checking.
 // Configure as a PHP style hash array: array('en'=>'English', 'de'=>'Deutsch');
 // Leave empty for default set of available language.
-$rcmail_config['spellcheck_languages'] = NULL;
+$rcmail_config['spellcheck_languages'] = array('de'=>'Deutsch', 'en'=>'English');
 
 // Makes that words with all letters capitalized will be ignored (e.g. GOOGLE)
-$rcmail_config['spellcheck_ignore_caps'] = false;
+$rcmail_config['spellcheck_ignore_caps'] = true;
 
 // Makes that words with numbers will be ignored (e.g. g00gle)
-$rcmail_config['spellcheck_ignore_nums'] = false;
+$rcmail_config['spellcheck_ignore_nums'] = true;
 
 // Makes that words with symbols will be ignored (e.g. g@@gle)
-$rcmail_config['spellcheck_ignore_syms'] = false;
+$rcmail_config['spellcheck_ignore_syms'] = true;
 
 // Use this char/string to separate recipients when composing a new message
 $rcmail_config['recipients_separator'] = ',';
@@ -773,10 +773,10 @@ $rcmail_config['htmleditor'] = 0;
 $rcmail_config['prettydate'] = true;
 
 // save compose message every 300 seconds (5min)
-$rcmail_config['draft_autosave'] = 300;
+$rcmail_config['draft_autosave'] = 60;
 
 // default setting if preview pane is enabled
-$rcmail_config['preview_pane'] = false;
+$rcmail_config['preview_pane'] = true;
 
 // Mark as read when viewed in preview pane (delay in seconds)
 // Set to -1 if messages in preview pane should not be marked as read
@@ -786,7 +786,7 @@ $rcmail_config['preview_pane_mark_read'] = 0;
 $rcmail_config['logout_purge'] = false;
 
 // Compact INBOX on logout
-$rcmail_config['logout_expunge'] = false;
+$rcmail_config['logout_expunge'] = true;
 
 // Display attached images below the message body 
 $rcmail_config['inline_images'] = true;
@@ -807,7 +807,7 @@ $rcmail_config['read_when_deleted'] = true;
 
 // Set to true to never delete messages immediately
 // Use 'Purge' to remove messages marked as deleted
-$rcmail_config['flag_for_deletion'] = false;
+$rcmail_config['flag_for_deletion'] = true;
 
 // Default interval for auto-refresh requests (in seconds)
 // These are requests for system state updates e.g. checking for new messages, etc.
@@ -829,7 +829,7 @@ $rcmail_config['autoexpand_threads'] = 0;
 // -1 - don't cite the original message
 // 0  - place cursor below the original message
 // 1  - place cursor above original message (top posting)
-$rcmail_config['reply_mode'] = 0;
+$rcmail_config['reply_mode'] = 1;
 
 // When replying strip original signature from message
 $rcmail_config['strip_existing_sig'] = true;
