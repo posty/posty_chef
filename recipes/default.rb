@@ -13,9 +13,8 @@ if node['mysqld']['root_password'].to_s.empty?
   Chef::Application.fatal!("Please set a root password for the mysql database.")
 end
 
-timezone 'Europe/Berlin'
-
 include_recipe "apt"
+include_recipe "timezone_lwrp"
 include_recipe "locale"
 include_recipe "mysqld"
 
@@ -25,11 +24,12 @@ include_recipe "posty::postfix"
 include_recipe "posty::dkim"
 include_recipe "posty::posty"
 include_recipe "posty::automx"
-include_recipe "posty::spamhaus"
 include_recipe "posty::amavis"
 include_recipe "posty::spamassassin"
+include_recipe "clamav"
 include_recipe "posty::postgrey"
 
-include_recipe "clamav" if node["posty"]["clamav"]["install"]
+include_recipe "posty::spamhaus" if node["posty"]["spamhaus_blacklist"]["install"]
+
 include_recipe "posty::d-push" if node["posty"]["d-push"]["install"]
 include_recipe "posty::roundcube" if node["posty"]["roundcube"]["install"]

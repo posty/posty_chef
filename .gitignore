@@ -23,3 +23,5 @@ bin/*
 
 # Git
 .gitconfig
+
+.ruby-version
