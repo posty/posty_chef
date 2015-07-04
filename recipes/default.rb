@@ -2,7 +2,7 @@
 # Cookbook Name:: posty
 # Recipe:: default
 #
-# Copyright 2014, posty-soft.org
+# Copyright 2015, posty-soft.org
 #
 # Licensed under the LGPL v3
 # https://www.gnu.org/licenses/lgpl.html
@@ -17,6 +17,11 @@ include_recipe "apt"
 include_recipe "timezone_lwrp"
 include_recipe "locale"
 include_recipe "mysqld"
+
+execute "generate-dhe-group" do
+  command "openssl dhparam -out /etc/ssl/private/dhparams.pem 2048"
+  not_if { File.exists?("/etc/ssl/private/dhparams.pem") }
+end
 
 include_recipe "posty::unattended-upgrades"
 include_recipe "posty::dovecot"

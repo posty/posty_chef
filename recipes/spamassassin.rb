@@ -2,7 +2,7 @@
 # Cookbook Name:: posty
 # Recipe:: spamassassin
 #
-# Copyright 2014, posty-soft.org
+# Copyright 2015, posty-soft.org
 #
 # Licensed under the LGPL v3
 # https://www.gnu.org/licenses/lgpl.html

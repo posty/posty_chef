@@ -2,7 +2,7 @@
 # Cookbook Name:: posty
 # Recipe:: dovecot
 #
-# Copyright 2014, posty-soft.org
+# Copyright 2015, posty-soft.org
 #
 # Licensed under the LGPL v3
 # https://www.gnu.org/licenses/lgpl.html
@@ -79,7 +79,7 @@ template "/etc/dovecot/quota-warning.sh" do
   mode "0655"
   variables(:domain => node["posty"]["mail"]["domain"])
 end
-%w{ 10-auth.conf 10-mail.conf 10-master.conf 10-ssl.conf 15-lda.conf 15-mailboxes.conf 20-imap.conf 20-lmtp.conf 20-managesieve.conf 90-plugin.conf 90-quota.conf auth-sql.conf.ext }.each do |template|
+%w{ 10-auth.conf 10-mail.conf 10-master.conf 10-ssl.conf 10-logging.conf 15-lda.conf 15-mailboxes.conf 20-imap.conf 20-lmtp.conf 20-managesieve.conf 90-plugin.conf 90-quota.conf auth-sql.conf.ext }.each do |template|
   template "/etc/dovecot/conf.d/#{template}" do
     source "dovecot/conf.d/#{template}"
     owner "root"
