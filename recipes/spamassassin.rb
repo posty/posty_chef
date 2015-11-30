@@ -11,6 +11,14 @@
 Chef::Log.info("[Installing spamassassin and spamc]")
 package 'spamassassin spamc'
 
+Chef::Log.info("[Enable CRON update for spamassassin]")
+template "/etc/default/spamassassin" do
+  source "spamassassin/default"
+  mode "0644"
+  owner "root"
+  group "root"
+end
+
 Chef::Log.info("[Configuring spamassassin cronjob]")
 template "/etc/cron.daily/spamassassin" do
   source "spamassassin/cron.daily.erb"

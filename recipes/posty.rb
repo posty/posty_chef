@@ -173,7 +173,7 @@ end
 if node["posty"]["webindex"]["install"]
   Chef::Log.info("[Add webindex]")
   template "/var/www/index.html" do
-    source "posty/index.html"
+    source "posty/index.html.erb"
     owner "www-data"
     group "www-data"
     mode "0644"

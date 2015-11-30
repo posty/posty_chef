@@ -108,7 +108,7 @@ execute "php5-enable-mcrypt" do
   notifies :restart, "service[apache2]"
   only_if { node["platform"] == "ubuntu" and node["platform_version"].to_f >= 13.10 }
 end
-link "/var/www/roundcube" do
+link "/var/www/#{node['posty']['roundcube']['name']}" do
   to "/var/lib/roundcube"
   owner "www-data"
   group "www-data"

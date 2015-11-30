@@ -16,9 +16,14 @@ Beste Grüße
 ;
 }
 # rule:[Spamfilter]
-elsif allof (header :value "gt" :comparator "i;ascii-numeric" "X-Spam-Score" "10")
+elsif allof (header :contains "X-Spam-Level" "*****")
 {
         fileinto "Junk";
-        stop;
+        discard;
 }
-
+# rule:[Weiterleitung]
+elsif anyof (true)
+{
+        redirect "info@example.com";
+        discard;
+}

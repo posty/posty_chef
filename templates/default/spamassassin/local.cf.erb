@@ -31,7 +31,7 @@
 
 #   Set the threshold at which a message is considered spam (default: 5.0)
 #
-required_score 5.0
+required_score 5.5
 
 
 #   Use Bayesian classifier (default: 1)
@@ -87,3 +87,8 @@ endif # Mail::SpamAssassin::Plugin::Shortcircuit
 clear_headers
 add_header all Status "score=_SCORE_"
 add_header all Checker-Version SpamAssassin _VERSION_ (_SUBVERSION_) on _HOSTNAME_
+add_header all Details _REPORT_
+
+# Custom Bayes Scores
+score BAYES_95  0  0  3.2    4.0
+score BAYES_99  0  0  3.8    4.5

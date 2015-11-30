@@ -5,6 +5,10 @@
 # is /etc/mailname.
 #myorigin = /etc/mailname
 
+# Log Debugging
+debug_peer_level = 2
+debug_peer_list = 0.0.0.0/0
+
 smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
 biff = no
 
@@ -72,10 +76,10 @@ inet_protocols = all
 unverified_recipient_reject_code = 550
 
 # DKIM
-milter_default_action = accept
-milter_protocol = 2
-smtpd_milters = inet:127.0.0.1:10026
-non_smtpd_milters = inet:127.0.0.1:10026
+#milter_default_action = accept
+#milter_protocol = 2
+#smtpd_milters = inet:127.0.0.1:10026
+#non_smtpd_milters = inet:127.0.0.1:10026
 
 smtpd_relay_restrictions = 
   reject_non_fqdn_recipient
@@ -86,6 +90,9 @@ smtpd_relay_restrictions =
   reject_unlisted_recipient
   permit_sasl_authenticated
   permit_mynetworks
+  reject_rbl_client ix.dnsbl.manitu.net
+  reject_rbl_client dnsbl-1.uceprotect.net
+  reject_rbl_client bl.spamcop.net
   check_policy_service inet:127.0.0.1:10023
   reject_unverified_recipient
   reject_unknown_helo_hostname

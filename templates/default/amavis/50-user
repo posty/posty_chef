@@ -8,6 +8,8 @@ use strict;
 # the directives you can use in this file
 #
 
+$log_level = 5;
+
 @bypass_virus_checks_maps = (
    \%bypass_virus_checks, \@bypass_virus_checks_acl, \$bypass_virus_checks_re);
 
@@ -16,17 +18,24 @@ use strict;
 
 $enable_dkim_verification = 1;
 # Don't be verbose about sending mail:
+
+# global whitelist and blacklist for sender domains or email addresses
+read_hash(\%whitelist_sender, '/etc/amavis/whitelist');
+read_hash(\%blacklist_sender, '/etc/amavis/blacklist');
+
 @whitelist_sender_acl = qw( .$mydomain );
 $final_virus_destiny      = D_REJECT; # (defaults to D_BOUNCE)
 $final_banned_destiny     = D_REJECT;  # (defaults to D_BOUNCE)
 $final_spam_destiny       = D_REJECT;  # (defaults to D_REJECT)
-$final_bad_header_destiny = D_REJECT;  # (defaults to D_PASS), D_BOUNCE suggested
+$final_bad_header_destiny = D_PASS;  # (defaults to D_PASS), D_BOUNCE suggested
 
 $sa_spam_subject_tag = '';
-$sa_tag_level_deflt  = 2.0;  # add spam info headers if at, or above that level
-$sa_tag2_level_deflt = 6.31; # add 'spam detected' headers at that level
-$sa_kill_level_deflt = 6.31; # triggers spam evasive actions
+$sa_tag_level_deflt  = -100.0;  # add spam info headers if at, or above that level
+$sa_tag2_level_deflt = 5.5; # add 'spam detected' headers at that level
+$sa_kill_level_deflt = 5.5; # triggers spam evasive actions
 $sa_dsn_cutoff_level = 10;   # spam level beyond which a DSN is not sent
+
+$allowed_added_header_fields{lc('X-Spam-Details')} = 1;
 
 $virus_quarantine_method = $spam_quarantine_method = $banned_files_quarantine_method = $bad_header_quarantine_method = undef;
 

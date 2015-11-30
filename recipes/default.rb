@@ -13,6 +13,16 @@ if node['mysqld']['root_password'].to_s.empty?
   Chef::Application.fatal!("Please set a root password for the mysql database.")
 end
 
+package 'bind9' do
+  action :purge
+end
+
+package 'xinetd' do
+  action :purge
+end
+
+package 'logtail'
+
 include_recipe "apt"
 include_recipe "timezone_lwrp"
 include_recipe "locale"
@@ -26,7 +36,7 @@ end
 include_recipe "posty::unattended-upgrades"
 include_recipe "posty::dovecot"
 include_recipe "posty::postfix"
-include_recipe "posty::dkim"
+#include_recipe "posty::dkim"
 include_recipe "posty::posty"
 include_recipe "posty::automx"
 include_recipe "posty::amavis"

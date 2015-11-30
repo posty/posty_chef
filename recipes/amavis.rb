@@ -9,7 +9,7 @@
 #
 
 Chef::Log.info("[Install Amavis]")
-package "amavisd-new clamav-daemon clamav-freshclam spamassassin libnet-dns-perl libmail-spf-perl pyzor razor arj bzip2 cabextract cpio file gzip lhasa nomarch pax unrar unzip zip zoo"
+package "amavisd-new clamav-daemon clamav-freshclam spamassassin libnet-dns-perl libmail-spf-perl pyzor razor arj bzip2 cabextract cpio file gzip lhasa nomarch pax unzip zip zoo"
 
 group "clamav" do
   action :modify

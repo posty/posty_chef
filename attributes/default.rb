@@ -43,6 +43,7 @@ default["posty"]["db"]["socket"] = "/var/run/mysqld/mysqld.sock"
 default["posty"]["roundcube"]["dbname"]  = "roundcube"
 default["posty"]["roundcube"]["dbuser"]  = "roundcube"
 default["posty"]["roundcube"]["dbpass"]  = ""
+default["posty"]["roundcube"]["name"]    = "roundcube"
 
 default["posty"]["api"]["github"]   = "https://github.com/posty/posty_api"
 default["posty"]["api"]["revision"] = "master"
