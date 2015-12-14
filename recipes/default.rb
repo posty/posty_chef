@@ -21,6 +21,10 @@ package 'xinetd' do
   action :purge
 end
 
+package 'portmap' do
+  action :purge
+end
+
 package 'logtail'
 
 include_recipe "apt"
