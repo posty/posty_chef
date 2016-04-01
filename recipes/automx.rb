@@ -64,6 +64,13 @@ template "/etc/automx.conf" do
   variables(:domain => node["posty"]["mail"]["domain"], :server => node["posty"]["mail"]["hostname"])
 end
 
+template "/etc/automx-script.py" do
+  source "automx/automx-script.py"
+  owner "root"
+  group "root"
+  mode "0755"
+end
+
 directory "/var/log/automx" do
   owner 'www-data'
   group 'www-data'
