@@ -75,7 +75,7 @@ template "/etc/apache2/sites-available/default-ssl.conf" do
   owner "root"
   group "root"
   mode "0644"
-  variables(:server => node["posty"]["mail"]["hostname"], :domain => node["mail"]["domain"], :certificate_name => node["posty"]["certificate_name"])
+  variables(:server => node["posty"]["mail"]["hostname"], :domain => node["posty"]["mail"]["domain"], :certificate_name => node["posty"]["certificate_name"])
 end
 execute "enable-apache2-sites" do
   command "a2ensite default-ssl.conf"
@@ -105,7 +105,7 @@ template "#{node["posty"]["api"]["location"]}/config/database.yml" do
   mode "0644"
 end
 
-execute "bundle install" do
+execute "bundle install --with mysql" do
   cwd node["posty"]["api"]["location"]
   not_if 'bundle check', :cwd => node["posty"]["api"]["location"]
 end
