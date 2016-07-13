@@ -82,6 +82,8 @@ unverified_recipient_reject_code = 550
 #non_smtpd_milters = inet:127.0.0.1:10026
 
 smtpd_relay_restrictions = 
+  check_client_access hash:/etc/postfix/client_checks
+  check_sender_access hash:/etc/postfix/sender_checks
   reject_non_fqdn_recipient
   reject_non_fqdn_sender
   reject_unknown_sender_domain
@@ -107,3 +109,7 @@ smtpd_relay_restrictions =
 virtual_alias_maps = proxy:mysql:/etc/postfix/virtual/mysql-virtual-user-aliases.cf, proxy:mysql:/etc/postfix/virtual/mysql-virtual-domain-aliases.cf
 relay_domains = proxy:mysql:/etc/postfix/virtual/mysql-virtual-mailbox-domains.cf
 transport_maps = proxy:mysql:/etc/postfix/virtual/mysql-virtual-transports.cf, $relay_domains
+
+# BCC to Archiv
+recipient_bcc_maps = hash:/etc/postfix/bcc_to_archiv
+sender_bcc_maps = hash:/etc/postfix/bcc_to_archiv

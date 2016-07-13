@@ -11,6 +11,7 @@
 # ==========================================================================
 smtp      inet  n       -       -       -       -       smtpd
   -o smtpd_proxy_filter=localhost:10024
+  -o smtpd_sasl_auth_enable=no
 #smtp      inet  n       -       -       -       1       postscreen
 #smtpd     pass  -       -       -       -       -       smtpd
 #dnsblog   unix  -       -       -       -       0       dnsblog

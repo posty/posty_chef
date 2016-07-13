@@ -27,8 +27,18 @@ Chef::Log.info("[Install postfix]")
   package pkg
 end
 
-
 Chef::Log.info("[Configure postfix]")
+
+%w(client_checks sender_checks bcc_to_archiv).each do |filename|
+  file "/etc/postfix/#{filename}" do
+    owner 'root'
+    group 'root'
+    mode '0755'
+    action :touch 
+    not_if { File.exists?("/etc/postfix/#{filename}") }
+  end
+end
+
 %w( master.cf main.cf ).each do |template|
   template "/etc/postfix/#{template}" do
     source "postfix/#{template}"
