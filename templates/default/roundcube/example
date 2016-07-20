@@ -4,7 +4,7 @@ require ["vacation","relational","comparator-i;ascii-numeric","fileinto"];
 if anyof (true)
 {
         vacation
-                :days 4
+                :days 1
                 :subject "Abwesenheitsnachricht"
                 text:
 Sehr geehrte Damen und Herren,
