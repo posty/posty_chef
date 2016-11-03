@@ -1,0 +1,5 @@
+user = <%= node["posty"]["db"]["dbuser"]%>
+password = <%= node["posty"]["db"]["dbpass"] %>
+hosts = 127.0.0.1
+dbname = <%= node["posty"]["db"]["dbname"] %>
+query = SELECT "lmtp:unix:private/dovecot-lmtp" FROM virtual_domain_aliases WHERE virtual_domain_aliases.name='%s'

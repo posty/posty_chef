@@ -93,7 +93,7 @@ smtpd_relay_restrictions =
   permit_sasl_authenticated
   permit_mynetworks
   reject_rbl_client ix.dnsbl.manitu.net
-  reject_rbl_client dnsbl-1.uceprotect.net
+  #reject_rbl_client dnsbl-1.uceprotect.net
   reject_rbl_client bl.spamcop.net
   check_policy_service inet:127.0.0.1:10023
   reject_unverified_recipient
@@ -107,7 +107,7 @@ smtpd_relay_restrictions =
   
 # MySQL Connection
 virtual_alias_maps = proxy:mysql:/etc/postfix/virtual/mysql-virtual-user-aliases.cf, proxy:mysql:/etc/postfix/virtual/mysql-virtual-domain-aliases.cf
-relay_domains = proxy:mysql:/etc/postfix/virtual/mysql-virtual-mailbox-domains.cf
+relay_domains = proxy:mysql:/etc/postfix/virtual/mysql-virtual-mailbox-domains.cf, proxy:mysql:/etc/postfix/virtual/mysql-virtual-mailbox-domain-aliases.cf
 transport_maps = proxy:mysql:/etc/postfix/virtual/mysql-virtual-transports.cf, $relay_domains
 
 # BCC to Archiv

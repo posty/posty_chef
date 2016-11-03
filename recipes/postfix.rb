@@ -56,7 +56,7 @@ directory "/etc/postfix/virtual" do
   mode "0750"
   action :create
 end
-%w{ mysql-virtual-domain-aliases.cf mysql-virtual-mailbox-domains.cf mysql-virtual-mailbox-maps.cf mysql-virtual-transports.cf mysql-virtual-user-aliases.cf }.each do |template|
+%w{ mysql-virtual-domain-aliases.cf mysql-virtual-mailbox-domains.cf mysql-virtual-mailbox-maps.cf mysql-virtual-transports.cf mysql-virtual-user-aliases.cf mysql-virtual-mailbox-domain-aliases.cf }.each do |template|
   template "/etc/postfix/virtual/#{template}" do
     source "postfix/virtual/#{template}"
     owner "root"

@@ -79,7 +79,7 @@ template "/etc/dovecot/quota-warning.sh" do
   mode "0655"
   variables(:domain => node["posty"]["mail"]["domain"])
 end
-%w{ 10-auth.conf 10-mail.conf 10-master.conf 10-ssl.conf 10-logging.conf 15-lda.conf 15-mailboxes.conf 20-imap.conf 20-lmtp.conf 20-managesieve.conf 90-plugin.conf 90-quota.conf auth-sql.conf.ext }.each do |template|
+%w{ 10-auth.conf 10-mail.conf 10-master.conf 10-ssl.conf 10-logging.conf 15-lda.conf 15-mailboxes.conf 20-imap.conf 20-lmtp.conf 20-managesieve.conf 90-plugin.conf 90-quota.conf 90-sieve.conf 90-acl.conf auth-sql.conf.ext }.each do |template|
   template "/etc/dovecot/conf.d/#{template}" do
     source "dovecot/conf.d/#{template}"
     owner "root"
@@ -89,6 +89,14 @@ end
     notifies :restart, "service[dovecot]"
     notifies :restart, "service[postfix]"
   end
+end
+
+Chef::Log.info("[Create Shared Dictionary Folder]")
+directory "/var/lib/dovecot/db" do
+  owner 'vmail'
+  group 'vmail'
+  mode '0755'
+  action :create
 end
 
 Chef::Log.info("[Increase inotify max_user_instances]")
