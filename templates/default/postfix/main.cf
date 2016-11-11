@@ -26,6 +26,15 @@ message_size_limit = 104857600
 
 readme_directory = no
 
+# The time after which the sender receives a copy of the message headers of mail that is still queued.
+delay_warning_time=6h
+
+# Consider a message as undeliverable, when delivery fails with a temporary error, and the time in the queue has reached the maximal_queue_lifetime limit.
+maximal_queue_lifetime=2d
+
+# Consider a bounce message as undeliverable, when delivery fails with a temporary error, and the time in the queue has reached the bounce_queue_lifetime limit.
+bounce_queue_lifetime=1d
+
 # helo vom client erfordert
 smtpd_helo_required = yes
 
@@ -50,7 +59,7 @@ smtpd_tls_security_level=may
 smtpd_tls_dh1024_param_file = /etc/ssl/private/dhparams.pem
 smtpd_tls_protocols = !SSLv2, !SSLv3
 smtpd_tls_ciphers = high
-smtpd_tls_loglevel = 0
+smtpd_tls_loglevel = 1
 smtpd_tls_cert_file=/etc/ssl/certs/<%= @certificate_name %>.pem
 smtpd_tls_key_file=/etc/ssl/private/<%= @certificate_name %>.key
 smtpd_tls_session_cache_database = btree:$data_directory/smtpd_scache
