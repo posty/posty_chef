@@ -102,8 +102,9 @@ smtpd_relay_restrictions =
   permit_sasl_authenticated
   permit_mynetworks
   reject_rbl_client ix.dnsbl.manitu.net
-  #reject_rbl_client dnsbl-1.uceprotect.net
   reject_rbl_client bl.spamcop.net
+  #reject_rbl_client sbl.spamhaus.org
+  reject_rbl_client dnsbl-1.uceprotect.net
   check_policy_service inet:127.0.0.1:10023
   reject_unverified_recipient
   reject_unknown_helo_hostname

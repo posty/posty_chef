@@ -90,8 +90,13 @@ add_header all Checker-Version SpamAssassin _VERSION_ (_SUBVERSION_) on _HOSTNAM
 add_header all Details _REPORT_
 
 # Custom Bayes Scores
+score BAYES_00  0  0 -0.001 -0.001
+score BAYES_05  0  0 -0.001 -0.001
 score BAYES_95  0  0  3.2    4.0
 score BAYES_99  0  0  3.8    4.5
 
 # Custom Scores
 score RP_MATCHES_RCVD -0.1
+score URIBL_SBL_A 0 0.7 0 1.0
+score URIBL_DBL_SPAM 0 2.2 0 2.2
+score RCVD_IN_SBL 0 2.596 0 1.141
