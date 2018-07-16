@@ -112,8 +112,11 @@ password_query = \
     '/srv/vmail/%Ld/%Ln' AS userdb_home, \
     5000 AS userdb_uid, \
     5000 AS userdb_gid, \
-    CONCAT('*:storage=', quota, 'M') AS userdb_quota_rule \
-  FROM users_view WHERE email='%Lu';
+    CONCAT('*:storage=', quota, 'M') AS userdb_quota_rule, \
+    nodelay \
+  FROM users_view \
+  LEFT JOIN dovecot_client_extra_fields on '%r' = remote_ip \
+  WHERE email='%Lu';
 
 # userdb query to retrieve the user information. It can return fields:
 #   uid - System UID (overrides mail_uid setting)
